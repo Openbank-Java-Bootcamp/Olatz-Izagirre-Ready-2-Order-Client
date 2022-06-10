@@ -6,6 +6,7 @@ import HomePage from "./pages/HomePage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import IsAnon from "./components/IsAnon";
+import IsAdmin from "./components/IsAdmin";
 
 function App() {
   return (
@@ -17,9 +18,9 @@ function App() {
         <Route
           path="/signup"
           element={
-            <IsAnon>
+             <IsAdmin>
               <SignupPage />
-            </IsAnon>
+             </IsAdmin>
           }
         />
         <Route

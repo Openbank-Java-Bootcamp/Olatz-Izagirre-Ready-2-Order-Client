@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 
 function Navbar() {
-  const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
+  const { isLoggedIn, user, logOutUser, role } = useContext(AuthContext);
+
 
   return (
     <nav className="Navbar">
@@ -11,21 +12,23 @@ function Navbar() {
         <button>Home</button>
       </Link>
 
-      {isLoggedIn && (
+      {role=="ADMIN" && (
         <>
-          <Link to="/projects">
-            <button>Projects</button>
+          <Link to="/signup">
+            <button>Sign Up</button>
+          </Link></>)}
+          {isLoggedIn && (
+        <>
+          <Link to="/">
+            <button onClick={logOutUser}>Logout</button>
           </Link>
-          <button onClick={logOutUser}>Logout</button>
           <span>{user && user.name}</span>
+          <span>{user && role}</span>
         </>
       )}
 
       {!isLoggedIn && (
         <>
-          <Link to="/signup">
-            <button>Sign Up</button>
-          </Link>
           <Link to="/login">
             <button>Login</button>
           </Link>
