@@ -34,7 +34,7 @@ function LoginPage(props) {
 
         authenticateUser();
 
-        navigate("/"); // <== ADD
+        navigate("/resume"); // <== ADD
       })
       .catch((error) => {
         const errorDescription = error.response.data.errors[0].defaultMessage;
