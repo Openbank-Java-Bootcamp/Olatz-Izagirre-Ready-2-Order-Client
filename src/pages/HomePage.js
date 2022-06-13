@@ -20,16 +20,18 @@ function HomePage() {
     getVisibleItems();
   }, []);
   return (
-    <div>
-      <h1>Menu</h1>
+    <div className="right_align">
+      <h2>Menu</h2>
+      <div className="foods">
       {orderItems.map((orderItem) => (
-        <div key={orderItem.id}>
+        <div key={orderItem.id} className="food">
           <img src={orderItem.image} alt={orderItem.name} height="100px" />
-          <h1>{orderItem.name}</h1>
+          <h3>{orderItem.name}</h3>
           <p>{orderItem.description}</p>
-          <h3>{orderItem.price} €</h3>
+          <h4>{orderItem.price} €</h4>
         </div>
       ))}
+    </div>
     </div>
   );
 }

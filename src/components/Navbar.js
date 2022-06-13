@@ -9,6 +9,8 @@ function Navbar() {
 
   return (
     <nav className="Navbar">
+      <h2>READY2ORDER</h2>
+      <div>
       {isLoggedIn&&
       <Link to="/resume">
         <button>Resume</button>
@@ -30,7 +32,7 @@ function Navbar() {
       {role === "CHEF" && (
         <>
           <Link to="/orderItems">
-            <button>Order Items</button>
+            <button>Food</button>
           </Link>
           <Link to="/chef/orders">
           <button>Orders</button>
@@ -60,8 +62,7 @@ function Navbar() {
           <Link to="/">
             <button onClick={logOutUser}>Logout</button>
           </Link>
-          <span>{user && user.name}</span>
-          <span>{user && role}</span>
+          <span>{user && <span>Welcome, {user.name}</span>}</span>
         </>
       )}
 
@@ -83,7 +84,7 @@ function Navbar() {
           </button>
         </>
       )}
-      
+      </div>
     </nav>
   );
 }

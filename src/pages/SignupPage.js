@@ -13,7 +13,6 @@ function SignupPage(props) {
   const [users, setUsers] = useState([]);
 
   const getAllUsers = () => {
-
     const stored = localStorage.getItem("authToken");
     axios
       .get(`${API_URL}/api/users`, {
@@ -28,7 +27,6 @@ function SignupPage(props) {
   }, []);
 
   const navigate = useNavigate();
-  
 
   const handleEmail = (e) => setEmail(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
@@ -62,41 +60,74 @@ function SignupPage(props) {
   };
 
   return (
-    <div className="SignupPage">
-      <h1>Sign Up</h1>
-
-      <form onSubmit={handleSignupSubmit}>
-        <label>Email:</label>
-        <input type="email" name="email" value={email} onChange={handleEmail} />
-
-        <label>Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handlePassword}
-        />
-
-        <label>Name:</label>
-        <input type="text" name="name" value={name} onChange={handleName} />
-
-        <label>Role:</label>
-        <select name="role" value={role} onChange={handleRole}>
-          <option value="CHEF">Chef</option>
-          <option value="WAITER">Waiter</option>
-          <option value="ADMIN">Admin</option>
-        </select>
-
-        <button type="submit">Sign Up</button>
-      </form>
-
-      {errorMessage && <p>{errorMessage}</p>}
-
+    <div className="left_align">
       <div>
-        {users && users.map((user)=><div key ={user.id}><h1>{user.name}</h1><h2>{user.role.name}</h2></div>)}
+        <table>
+          <tr>
+            <th><h2>Employee name</h2></th>
+            <th><h2>Role</h2></th>
+          </tr>
+          {users &&
+            users.map((user) => (
+              <tr key={user.id}>
+                <td>{user.name}</td>
+                <td>{user.role.name}</td>
+              </tr>
+            ))}
+        </table>
       </div>
 
-      
+      <div className="grid align__item">
+        <div className="register">
+          <h2>New employees</h2>
+
+          <form onSubmit={handleSignupSubmit} className="form">
+            <label>Email:</label>
+            <div className="form__field">
+              <input
+                type="email"
+                name="email"
+                value={email}
+                onChange={handleEmail}
+              />
+            </div>
+
+            <label>Password:</label>
+            <div className="form__field">
+              <input
+                type="password"
+                name="password"
+                value={password}
+                onChange={handlePassword}
+              />
+            </div>
+
+            <label>Name:</label>
+            <div className="form__field">
+              <input
+                type="text"
+                name="name"
+                value={name}
+                onChange={handleName}
+              />
+            </div>
+
+            <label>Role:</label>
+            <div className="form__field">
+              <select name="role" value={role} onChange={handleRole}>
+                <option value="CHEF">Chef</option>
+                <option value="WAITER">Waiter</option>
+                <option value="ADMIN">Admin</option>
+              </select>
+            </div>
+            <div className="form__field">
+              <button type="submit">Sign Up</button>
+            </div>
+          </form>
+
+          {errorMessage && <p>{errorMessage}</p>}
+        </div>
+      </div>
     </div>
   );
 }

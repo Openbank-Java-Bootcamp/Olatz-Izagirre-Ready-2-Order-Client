@@ -5,17 +5,37 @@ import { AuthContext } from "../context/auth.context";
 function ResumePage() {
   const { isLoggedIn, isLoading, role } = useContext(AuthContext);
   return (
-    <div>
+    <div className="resume">
       {role === "ADMIN" && (
         <>
-          <Link to="/signup">
-            <button>Employees</button>
+          <Link to="/signup" >
+            <button><h2>Employees</h2></button>
           </Link>
-          <Link to="/tables">
-            <button>Tables</button>
+          <Link to="/tables" >
+            <button><h2>Tables</h2></button>
           </Link>
           <Link to="/orders">
-            <button>Orders</button>
+            <button><h2>Orders</h2></button>
+          </Link>
+        </>
+      )}
+      {role === "CHEF" && (
+        <>
+          <Link to="/orderItems">
+            <button><h2>Food</h2></button>
+          </Link>
+          <Link to="/chef/orders">
+          <button><h2>Orders</h2></button>
+          </Link>
+        </>
+      )}
+      {role === "WAITER" && (
+        <>
+          <Link to="/tables/waiter">
+            <button><h2>Tables</h2></button>
+          </Link>
+          <Link to="/waiter/orders">
+            <button><h2>Orders</h2></button>
           </Link>
         </>
       )}

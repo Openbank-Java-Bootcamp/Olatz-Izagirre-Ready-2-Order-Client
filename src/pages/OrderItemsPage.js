@@ -57,9 +57,9 @@ function OrderItemsPage() {
 
   const toggleVisibility = (id) => {
     const token = localStorage.getItem("authToken");
-    const body = null
+    const body = null;
     axios
-      .patch(`${API_URL}/api/orderItems/${id}`,body, {
+      .patch(`${API_URL}/api/orderItems/${id}`, body, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(() => getAllOrderItems())
@@ -67,45 +67,68 @@ function OrderItemsPage() {
   };
 
   return (
-    <div>
-      <h1>Create new item</h1>
-
-      <form onSubmit={handleCreate}>
-        <label>Name:</label>
-        <input type="text" name="name" value={name} onChange={handleName} />
-
-        <label>Description:</label>
-        <textarea
-          type="text"
-          name="description"
-          value={description}
-          onChange={handleDescription}
-        />
-
-        <label>Image:</label>
-        <input type="text" name="image" value={image} onChange={handleImage} />
-
-        <label>Price:</label>
-        <input
-          type="number"
-          name="price"
-          value={price}
-          onChange={handlePrice}
-        />
-
-        <button type="submit">Create</button>
-      </form>
+    <div className="left_align">
+      <div className="foods">
       {orderItems.map((orderItem) => (
-        <div key={orderItem.id}>
+        <div key={orderItem.id}className="food">
           <img src={orderItem.image} alt={orderItem.name} height="100px" />
-          <h1>{orderItem.name}</h1>
+          <h3>{orderItem.name}</h3>
           <p>{orderItem.description}</p>
-          <h3>{orderItem.price} €</h3>
+          <h4>{orderItem.price} €</h4>
           <button onClick={() => toggleVisibility(orderItem.id)}>
             {orderItem.visible ? <span>HIDE</span> : <span>SHOW</span>}
           </button>
         </div>
-      ))}
+      ))}</div>
+      <div className="grid align__item">
+        <div className="register">
+          <h2>New food</h2>
+          <form onSubmit={handleCreate} className="form">
+            <label>Name:</label>
+            <div className="form__field">
+              <input
+                type="text"
+                name="name"
+                value={name}
+                onChange={handleName}
+              />
+            </div>
+
+            <label>Description:</label>
+            <div className="form__field">
+              <textarea
+                type="text"
+                name="description"
+                value={description}
+                onChange={handleDescription}
+              />
+            </div>
+
+            <label>Image:</label>
+            <div className="form__field">
+              <input
+                type="text"
+                name="image"
+                value={image}
+                onChange={handleImage}
+              />
+            </div>
+
+            <label>Price:</label>
+            <div className="form__field">
+              <input
+                type="number"
+                name="price"
+                value={price}
+                onChange={handlePrice}
+              />
+            </div>
+            <div className="form__field">
+              <button type="submit">Create</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }

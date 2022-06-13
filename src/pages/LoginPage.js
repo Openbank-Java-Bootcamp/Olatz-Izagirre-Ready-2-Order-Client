@@ -17,10 +17,12 @@ function LoginPage(props) {
   const { storeToken, authenticateUser } = useContext(AuthContext);
 
   const handleEmail = (e) => {
-    setEmail(e.target.value); setErrorMessage(undefined);
+    setEmail(e.target.value);
+    setErrorMessage(undefined);
   };
   const handlePassword = (e) => {
-    setPassword(e.target.value); setErrorMessage(undefined);
+    setPassword(e.target.value);
+    setErrorMessage(undefined);
   };
   const handleLoginSubmit = (e) => {
     e.preventDefault();
@@ -29,13 +31,13 @@ function LoginPage(props) {
     axios
       .post(`${API_URL}/auth/login`, requestBody)
       .then((response) => {
-          console.log("JWT token", response.data.authToken);
+        console.log("JWT token", response.data.authToken);
 
-          storeToken(response.data.authToken);
+        storeToken(response.data.authToken);
 
-          authenticateUser();
+        authenticateUser();
 
-          navigate("/resume");
+        navigate("/resume");
       })
       .catch((error) => {
         setErrorMessage("Wrong email or password.");
@@ -43,24 +45,38 @@ function LoginPage(props) {
   };
 
   return (
-    <div className="LoginPage">
-      <h1>Login</h1>
+    <div className="align">
+      <div className="grid align__item">
+        <div className="register">
+          <h2>Log in</h2>
 
-      <form onSubmit={handleLoginSubmit}>
-        <label>Email:</label>
-        <input type="email" name="email" value={email} onChange={handleEmail} />
+          <form onSubmit={handleLoginSubmit} className="form">
+            <label>Email:</label>
+            <div className="form__field">
+              <input
+                type="email"
+                name="email"
+                value={email}
+                onChange={handleEmail}
+              />
+            </div>
 
-        <label>Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handlePassword}
-        />
-
-        <button type="submit">Login</button>
-      </form>
-      {errorMessage && <p>{errorMessage}</p>}
+            <label>Password:</label>
+            <div className="form__field">
+              <input
+                type="password"
+                name="password"
+                value={password}
+                onChange={handlePassword}
+              />
+            </div>
+            <div className="form__field">
+              <button type="submit">LOG IN</button>
+            </div>
+          </form>
+          {errorMessage && <p>{errorMessage}</p>}
+        </div>
+      </div>
     </div>
   );
 }
