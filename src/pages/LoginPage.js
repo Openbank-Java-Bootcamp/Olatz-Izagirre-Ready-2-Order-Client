@@ -16,9 +16,12 @@ function LoginPage(props) {
 
   const { storeToken, authenticateUser } = useContext(AuthContext);
 
-  const handleEmail = (e) => setEmail(e.target.value);
-  const handlePassword = (e) => setPassword(e.target.value);
-
+  const handleEmail = (e) => {
+    setEmail(e.target.value); setErrorMessage(undefined);
+  };
+  const handlePassword = (e) => {
+    setPassword(e.target.value); setErrorMessage(undefined);
+  };
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     const requestBody = { email, password };
@@ -26,19 +29,16 @@ function LoginPage(props) {
     axios
       .post(`${API_URL}/auth/login`, requestBody)
       .then((response) => {
-        // Request to the server's endpoint `/auth/login` returns a response
-        // with the JWT string ->  response.data.authToken
-        console.log("JWT token", response.data.authToken);
+          console.log("JWT token", response.data.authToken);
 
-        storeToken(response.data.authToken);
+          storeToken(response.data.authToken);
 
-        authenticateUser();
+          authenticateUser();
 
-        navigate("/resume"); // <== ADD
+          navigate("/resume");
       })
       .catch((error) => {
-        const errorDescription = error.response.data.errors[0].defaultMessage;
-        setErrorMessage(errorDescription);
+        setErrorMessage("Wrong email or password.");
       });
   };
 
@@ -60,8 +60,7 @@ function LoginPage(props) {
 
         <button type="submit">Login</button>
       </form>
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-
+      {errorMessage && <p>{errorMessage}</p>}
     </div>
   );
 }

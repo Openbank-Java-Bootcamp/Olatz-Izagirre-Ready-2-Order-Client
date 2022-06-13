@@ -55,7 +55,10 @@ function SignupPage(props) {
         setRole("CHEF");
         getAllUsers();
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        const errorDescription = error.response.data.message;
+        setErrorMessage(errorDescription);
+      });
   };
 
   return (
@@ -87,11 +90,13 @@ function SignupPage(props) {
         <button type="submit">Sign Up</button>
       </form>
 
+      {errorMessage && <p>{errorMessage}</p>}
+
       <div>
         {users && users.map((user)=><div key ={user.id}><h1>{user.name}</h1><h2>{user.role.name}</h2></div>)}
       </div>
 
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+      
     </div>
   );
 }

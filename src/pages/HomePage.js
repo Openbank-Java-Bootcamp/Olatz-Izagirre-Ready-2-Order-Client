@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-// src/pages/HomePage.js
+
 const API_URL = "http://localhost:5005";
 
 function HomePage() {
@@ -18,7 +18,7 @@ function HomePage() {
 
   useEffect(() => {
     getVisibleItems();
-  }, [orderItems]);
+  }, []);
   return (
     <div>
       <h1>Menu</h1>
