@@ -45,17 +45,19 @@ function NewOrderPage() {
   };
 
   const sendToKitchen = () => {
-    const requestBody = { tableId, itemsId };
-    console.log(requestBody);
-    const storedToken = localStorage.getItem("authToken");
-    axios
-      .post(`${API_URL}/api/foodOrders`, requestBody, {
-        headers: { Authorization: `Bearer ${storedToken}` },
-      })
-      .then((response) => {
-        getOrders();
-      })
-      .catch((error) => console.log(error));
+    if (itemsId.length !== 0) {
+      const requestBody = { tableId, itemsId };
+      console.log(requestBody);
+      const storedToken = localStorage.getItem("authToken");
+      axios
+        .post(`${API_URL}/api/foodOrders`, requestBody, {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        })
+        .then((response) => {
+          getOrders();
+        })
+        .catch((error) => console.log(error));
+    }
   };
 
   const getOrders = () => {
@@ -93,69 +95,86 @@ function NewOrderPage() {
     getOrders();
   }, []);
 
-  console.log(orders);
-
   return (
     <div>
-      {orders && !isOrdered() && (
-        <div>
-          <h1>Menu</h1>
-          {orderItems.map((orderItem) => (
-            <div key={orderItem.id}>
-              <img src={orderItem.image} alt={orderItem.name} height="100px" />
-              <h1>{orderItem.name}</h1>
-              <p>{orderItem.description}</p>
-              <h3>{orderItem.price} €</h3>
-              <button onClick={() => selectItem(orderItem)}>ADD</button>
-            </div>
-          ))}
-          <div>
-            <h1>ORDER</h1>
-            {order &&
-              order.map((orderItem, index) => (
-                <div key={index}>
-                  <h1>{orderItem.name}</h1>
-                  <button onClick={() => deselectItem(index)}>DELETE</button>
-                </div>
-              ))}
-
-            <button onClick={() => sendToKitchen()}>SEND</button>
-          </div>
-        </div>
-      )}
       {orders && isOngoing() && (
-        <div>
+        <div className="center_align">
           {orders.map((order, index) => {
             if (order.status === "ORDERED") {
               return (
-                <div key={index}>
-                  {/* <Link to={`/orders/${order.id}`}> */}
-                    <h1>ORDER {order.id}</h1>
-                    <h2>{order.status}</h2>
-                    {order.orderItems.map((item, i) => (
-                      <div key={i}>
-                        <h1>{item.name}</h1>
-                      </div>
-                    ))}
-                  {/* </Link> */}
+                <div className="foods">
+                  <div key={index} className="food">
+                    <Link to={`/orders/${order.id}`}>
+                      <h2>ORDER {order.id}</h2>
+                      <h3>{order.status}</h3>
+                      {order.orderItems.map((item, i) => (
+                        <div key={i}>
+                          <h4>{item.name}</h4>
+                        </div>
+                      ))}
+                    </Link>
+                  </div>
                 </div>
               );
             } else if (order.status === "COOKED" || order.status === "SERVED") {
               return (
-                <div key={index}>
-                  <h1>ORDER {order.id}</h1>
-                  <h2>{order.status}</h2>
-                  {order.orderItems.map((item, i) => (
-                    <div key={i}>
-                      <h1>{item.name}</h1>
-                    </div>
-                  ))}
+                <div className="foods">
+                  <div key={index} className="food">
+                  <Link to={`/orders/${order.id}`}>
+                    <h2>ORDER {order.id}</h2>
+                    <h3>{order.status}</h3></Link>
+                  </div>
                 </div>
               );
             }
           })}
-
-          {/* <button onClick={() => update()}>EDIT</button> */}
+        </div>
+      )}
+      {orders && !isOrdered() && (
+        <div className="left_align">
+          <div className="order_grid">
+            <div className="order">
+              <h2>Menu</h2>
+              <div className="foods">
+                {orderItems.map((orderItem) => (
+                  <div key={orderItem.id} className="food">
+                    <img
+                      src={orderItem.image}
+                      alt={orderItem.name}
+                      height="100px"
+                    />
+                    <h1>{orderItem.name}</h1>
+                    <p>{orderItem.description}</p>
+                    <h3>{orderItem.price} €</h3>
+                    <button onClick={() => selectItem(orderItem)}>ADD</button>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <table className="fixed">
+                <tr>
+                  <th>
+                    <h2>NEW ORDER</h2>
+                  </th>
+                  <th>
+                    <button onClick={() => sendToKitchen()}>SEND</button>
+                  </th>
+                </tr>
+                {order &&
+                  order.map((orderItem, index) => (
+                    <tr key={index}>
+                      <td>{orderItem.name}</td>
+                      <td>
+                        <button onClick={() => deselectItem(index)}>
+                          DELETE
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+              </table>
+            </div>
+          </div>
         </div>
       )}
     </div>

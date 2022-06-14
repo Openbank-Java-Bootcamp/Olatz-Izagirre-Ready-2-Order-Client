@@ -29,15 +29,18 @@ function TablesByWaiterPage() {
   }, []);
 
   return (
-    <div>
-      <h1>TABLES</h1>
-      {tables &&
-        tables.map((table) => (
-          <Link to={`/tables/${table.id}/order`} key={table.id}>
-            <h1>{`Table number : ${table.id}`}</h1>
-          </Link>
-        ))}
-    </div>
+    <div className="center_align"><h2>TABLES</h2>
+    <div className="align">
+      <div className="tables">
+        
+        {tables &&
+          tables.map((table) => (
+            <Link to={`/tables/${table.id}/order`} key={table.id} className="table">
+              <h2>{`Table number : ${table.id}`}</h2>
+            </Link>
+          ))}
+      </div>
+    </div></div>
   );
 }
 export default TablesByWaiterPage;

@@ -67,7 +67,7 @@ function App() {
         <Route path = "/tables/waiter" element ={<IsWaiter><TablesByWaiterPage/></IsWaiter>}/>
         <Route path = "/tables/:tableId/order" element ={<IsWaiter><NewOrderPage/></IsWaiter>}/>
         <Route path = "/waiter/orders" element ={<IsWaiter><WaiterOrdersPage/></IsWaiter>}/>
-        {/* <Route path = "/orders/:orderId" element ={<IsWaiter><EditOrderPage/></IsWaiter>}/> */}
+         <Route path = "/orders/:orderId" element ={<IsWaiter><EditOrderPage/></IsWaiter>}/> 
         <Route
           path="/login"
           element={

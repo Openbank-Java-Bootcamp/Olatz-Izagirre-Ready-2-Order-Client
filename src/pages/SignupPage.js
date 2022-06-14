@@ -61,7 +61,7 @@ function SignupPage(props) {
 
   return (
     <div className="left_align">
-      <div>
+      <div className="users">
         <table>
           <tr>
             <th><h2>Employee name</h2></th>

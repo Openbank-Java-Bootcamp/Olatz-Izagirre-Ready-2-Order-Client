@@ -20,18 +20,11 @@ function EditOrderPage() {
   };
 
   const deselectItem = (index) => {
-    itemsId.splice(index, 1);
-    if (itemsId.length > 0) {
-      setItemsId(itemsId);
-    } else {
-      setItemsId([]);
-    }
+    const items = [...itemsId];
+    items.splice(index, 1);
+    setItemsId(items);
     order.splice(index, 1);
-    if (order.length > 0) {
-      setOrder(order);
-    } else {
-      setOrder([]);
-    }
+    setOrder(order);
   };
 
   const getVisibleItems = () => {
@@ -51,7 +44,8 @@ function EditOrderPage() {
       .put(`${API_URL}/api/foodOrders/${orderId}`, requestBody, {
         headers: { Authorization: `Bearer ${storedToken}` },
       })
-      .then((response) => {
+      .then(() => {
+        setOrder([]);
         setItemsId([]);
         getOrder();
       })
@@ -68,45 +62,65 @@ function EditOrderPage() {
         setOrder(response.data.orderItems);
         setTableId(response.data.eatingTable.id);
         const newOrderItems = response.data.orderItems;
+        let newItems = [];
         for (let i = 0; newOrderItems.length > i; i++) {
-          itemsId.push(newOrderItems[i].id);
-          setItemsId(itemsId);
+          newItems.push(newOrderItems[i].id);
+          setItemsId(newItems);
         }
-
-        setItemsId(itemsId);
       })
       .catch((error) => console.log(error));
   };
+
   useEffect(() => {
     getVisibleItems();
     getOrder();
   }, []);
 
   return (
-    <div>
+    <div className="left_align">
       {order && (
         <div>
-          <h1>Edit order</h1>
-          <h1>Menu</h1>
-          {orderItems.map((orderItem) => (
-            <div key={orderItem.id}>
-              <img src={orderItem.image} alt={orderItem.name} height="100px" />
-              <h1>{orderItem.name}</h1>
-              <p>{orderItem.description}</p>
-              <h3>{orderItem.price} €</h3>
-              <button onClick={() => selectItem(orderItem)}>ADD</button>
-            </div>
-          ))}
-          <h1>ORDER</h1>
-          {order &&
-            order.map((orderItem, index) => (
-              <div key={index}>
-                <h1>{orderItem.name}</h1>
-                <button onClick={() => deselectItem(index)}>DELETE</button>
+          <div className="order_grid">
+            <div className="order">
+              <h2>Menu</h2>
+              <div className="foods">
+                {orderItems.map((orderItem) => (
+                  <div key={orderItem.id} className="food">
+                    <img
+                      src={orderItem.image}
+                      alt={orderItem.name}
+                      height="100px"
+                    />
+                    <h1>{orderItem.name}</h1>
+                    <p>{orderItem.description}</p>
+                    <h3>{orderItem.price} €</h3>
+                    <button onClick={() => selectItem(orderItem)}>ADD</button>
+                  </div>
+                ))}
               </div>
-            ))}
-
-          <button onClick={() => sendToKitchen()}>SEND</button>
+            </div>
+            <div>
+              <table className="fixed">
+              <tr>
+                  <th>
+                    <h2>EDIT ORDER</h2>
+                  </th>
+                  <th>
+                    <button onClick={() => sendToKitchen()}>SEND</button>
+                  </th>
+                </tr>
+                {order &&
+                  order.map((orderItem, index) => (
+                    <tr key={index}>
+                      <td>{orderItem.name}</td>
+                      <td><button onClick={() => deselectItem(index)}>
+                        DELETE
+                      </button></td>
+                    </tr>
+                  ))}
+              </table>
+            </div>
+          </div>
         </div>
       )}
     </div>

@@ -1,5 +1,7 @@
 * {
   box-sizing: border-box;
+  text-decoration: none;
+  color: #2b2b2b;
 }
 
 html {
@@ -30,7 +32,13 @@ body {
   flex-direction: column;
   margin-right: 50px;
 }
-.left_align table {
+.center_align {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.users table {
   margin-top: 50px;
   background-color: white;
   margin-left: 70px;
@@ -40,13 +48,13 @@ body {
   border-collapse: collapse;
 }
 
-.left_align table td {
+.users table td {
   width: 400px;
   font-size: 20px;
   padding: 20px;
   border-top: 0.5px solid;
 }
-.left_align table th {
+.users table th {
   padding-top: 25px;
 }
 
@@ -195,7 +203,9 @@ h2 {
 .Navbar span {
   margin-left: 15px;
 }
-
+.food img{
+  border: 1px solid #242c37;
+}
 .food {
   box-shadow: 0 0 15px #5e5e5e;
   text-align: center;
@@ -203,11 +213,17 @@ h2 {
   margin-top: 50px;
   background-color: white;
   border-radius: 20px;
-  height: 400px;
+  height: max-content;
   color: #242c37;
+  
 }
 .food h3 {
   color: #fb6860;
+  text-transform: uppercase;
+}
+.food h4 {
+  color: #5e5e5e;
+  font-weight: 400;
   text-transform: uppercase;
 }
 .foods {
@@ -215,9 +231,10 @@ h2 {
   gap: 25px;
   margin-left: 50px;
   grid-template-columns: auto auto auto auto;
+  
 }
 .foods button {
-  margin-top: 15px;
+  margin-bottom: 15px;
   border: 1px solid #242c37;
   border-radius: 999px;
   background-color: transparent;
@@ -227,7 +244,152 @@ h2 {
   width: 100%;
   background-color: #f55951;
   color: #fff;
-  margin-bottom: 6rem;
+  margin-bottom: 0.1rem;
   width: 100%;
   font-size: 15px;
+}
+
+.center_align .tables{
+  display: grid;
+  gap: 100px;
+  margin-left: 175px;
+  margin-right:175px ;
+  grid-template-columns: auto auto auto auto;
+}
+.center_align .table{
+  box-shadow: 0 0 15px #5e5e5e;
+  text-align: center;
+  padding: 2rem 2rem;
+  margin-top: 50px;
+  background-color: white;
+  border-radius: 20px;
+  height: 100px;
+  color: #242c37;
+  text-decoration: none;
+}
+.center_align .table:hover{
+  box-shadow: 0 0 15px #5e5e5e;
+  text-align: center;
+  padding: 2rem 2rem;
+  margin-top: 50px;
+  background-color: #f3f4f6;
+  border-radius: 20px;
+  height: 100px;
+  color: #242c37;
+  text-decoration: none;
+}
+
+.table {
+  box-shadow: 0 0 15px #5e5e5e;
+  text-align: center;
+  padding: 2rem 2rem;
+  margin-top: 50px;
+  background-color: white;
+  border-radius: 20px;
+  height: 200px;
+  color: #242c37;
+  text-decoration: none;
+}
+
+.table:hover {
+  box-shadow: 0 0 15px #5e5e5e;
+  text-align: center;
+  padding: 2rem 2rem;
+  margin-top: 50px;
+  background-color: #f3f4f6;
+  border-radius: 20px;
+  height: 200px;
+  color: #242c37;
+  text-decoration: none;
+}
+.table h3,.editTable h3 {
+  color: #fb6860;
+  text-transform: uppercase;
+}
+.editTable h2, .table h2 {
+  font-size: 20px;
+
+  text-transform: uppercase;
+}
+.tables {
+  display: grid;
+  gap: 25px;
+  margin-left: 50px;
+  grid-template-columns: auto auto auto auto;
+}
+.editTables {
+  display: grid;
+  gap: 25px;
+  margin-left: 250px;
+  grid-template-columns: auto;
+}
+.editTable {
+  box-shadow: 0 0 15px #5e5e5e;
+  text-align: center;
+  padding: 2rem 2rem;
+  margin-top: 50px;
+  background-color: white;
+  border-radius: 20px;
+  height: 200px;
+  color: #242c37;
+  text-decoration: none;
+}
+.editTable:hover {
+  box-shadow: 0 0 15px #5e5e5e;
+  text-align: center;
+  padding: 2rem 2rem;
+  margin-top: 50px;
+  background-color: white;
+  border-radius: 20px;
+  height: 200px;
+  color: #242c37;
+  text-decoration: none;
+}
+
+.order .foods{
+  display: grid;
+  gap: 25px;
+  margin-right: 50px;
+  grid-template-columns: auto auto auto;
+}
+.order_grid{
+  display: grid;
+  gap: 25px;
+  margin-right: 25px;
+  grid-template-columns: auto auto;
+}
+.fixed{
+  position: fixed;
+  margin-top: 125px;
+  background-color: white;
+  align-items: flex-start;
+  border-radius: 20px;
+  box-shadow: 0 0 15px #5e5e5e;
+  border-collapse: collapse;
+  width: 500px;
+  font-size: 20px;
+  padding: 20px;
+}
+.fixed button {
+  border: 1px solid #242c37;
+  border-radius: 999px;
+  background-color: transparent;
+  text-align: center;
+  outline: 0;
+  padding: 0.5rem 0.5rem;
+  width: 50%;
+  background-color: #f55951;
+  color: #fff;
+  font-size: 15px;
+}
+
+.fixed td {
+  width: 400px;
+  font-size: 20px;
+  padding: 20px;
+  border-top: 0.5px solid;
+}
+.fixed th {
+  padding-top: 25px;
+  width: 400px;
 }

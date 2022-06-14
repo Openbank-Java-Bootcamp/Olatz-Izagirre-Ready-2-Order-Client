@@ -63,39 +63,48 @@ function TablesPage(props) {
   };
 
   return (
-    <div>
-      <h1>New Table</h1>
-
-      <form onSubmit={handleCreate}>
-        <label>Seats:</label>
-        <input
-          type="number"
-          name="seats"
-          value={seats}
-          onChange={handleSeats}
-        />
-
-        <label>Waiter:</label>
-        <select name="waiter" value={waiter} onChange={handleWaiter}>
-          <option>-</option>
-          {waiters.map((waiter) => (
-            <option value={waiter.name} key={waiter.id}>
-              {waiter.name}
-            </option>
-          ))}
-        </select>
-
-        <button type="submit">Create</button>
-      </form>
-      <div>
+    <div className="left_align">
+      <div className="tables">
         {tables &&
           tables.map((table) => (
-            <Link to={`/tables/${table.id}`} key={table.id}>
-                <h1>{`Table number : ${table.id}`}</h1>
-              <h1>{`Table seats : ${table.seats}`}</h1>
-              <h2>{`Waiter : ${table.waiter.name}`}</h2>
+            <Link to={`/tables/${table.id}`} key={table.id} className="table">
+              <h2>{`Table number : ${table.id}`}</h2>
+              <h2>{`Table seats : ${table.seats}`}</h2>
+              <h3>{`Waiter : ${table.waiter.name}`}</h3>
             </Link>
           ))}
+      </div>
+      <div className="grid align__item">
+        <div className="register">
+          <h2>New Table</h2>
+
+          <form onSubmit={handleCreate} className="form">
+            <label>Seats:</label>
+            <div className="form__field">
+              <input
+                type="number"
+                name="seats"
+                value={seats}
+                onChange={handleSeats}
+              />
+            </div>
+
+            <label>Waiter:</label>
+            <div className="form__field">
+              <select name="waiter" value={waiter} onChange={handleWaiter}>
+                <option>-</option>
+                {waiters.map((waiter) => (
+                  <option value={waiter.name} key={waiter.id}>
+                    {waiter.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form__field">
+              <button type="submit">Create</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

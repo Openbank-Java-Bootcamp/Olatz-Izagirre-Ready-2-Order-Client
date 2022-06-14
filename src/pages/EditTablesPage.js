@@ -32,7 +32,6 @@ function EditTablesPage(props) {
       .catch((error) => console.log(error));
   };
 
-
   useEffect(() => {
     getTable();
     getAllWaiters();
@@ -61,38 +60,54 @@ function EditTablesPage(props) {
   };
 
   return (
-    <div>
-      <h1>Edit Table</h1>
-      
-      {table &&
-      <form onSubmit={handleEdit}>
-        <label>Seats:</label>
-        <input
-          type="number"
-          name="seats"
-          value={seats || setSeats(table.seats)}
-          onChange={handleSeats}
-        />
+    <div className="left_align">
+      <div className="editTables"></div>
+      {table && (
+        <div className="editTable">
+          <h2>{`Table number : ${table.id}`}</h2>
+          <h2>{`Table seats : ${table.seats}`}</h2>
+          <h3>{`Waiter : ${table.waiter.name}`}</h3>
+        </div>
+      )}
+      <div className="grid align__item">
+        <div className="register">
+          <h2>Edit Table</h2>
 
-        <label>Waiter:</label>
-        <select name="waiter" value={waiter || setWaiter(table.waiter.name)} onChange={handleWaiter}>
-          <option>-</option>
-          {waiters.map((waiter) => (
-            <option value={waiter.name} key={waiter.id}>
-              {waiter.name}
-            </option>
-          ))}
-        </select>
+          {table && (
+            <form onSubmit={handleEdit} className="form">
+              <label>Seats:</label>
+              <div className="form__field">
+                <input
+                  type="number"
+                  name="seats"
+                  value={seats || setSeats(table.seats)}
+                  onChange={handleSeats}
+                />
+              </div>
 
-        <button type="submit">Edit</button>
-      </form>}
-      {table && <div>
-        <h1>{`Table number : ${table.id}`}</h1>
-        <h1>{`Table seats : ${table.seats}`}</h1>
-        <h2>{`Waiter : ${table.waiter.name}`}</h2>
-      </div>}
+              <label>Waiter:</label>
+              <div className="form__field">
+                <select
+                  name="waiter"
+                  value={waiter || setWaiter(table.waiter.name)}
+                  onChange={handleWaiter}
+                >
+                  <option>-</option>
+                  {waiters.map((waiter) => (
+                    <option value={waiter.name} key={waiter.id}>
+                      {waiter.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="form__field">
+                <button type="submit">Edit</button>
+              </div>
+            </form>
+          )}
+        </div>
+      </div>
     </div>
-      
   );
 }
 export default EditTablesPage;
