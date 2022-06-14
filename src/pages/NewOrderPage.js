@@ -98,36 +98,20 @@ function NewOrderPage() {
   return (
     <div>
       {orders && isOngoing() && (
-        <div className="center_align">
-          {orders.map((order, index) => {
-            if (order.status === "ORDERED") {
-              return (
-                <div className="foods">
-                  <div key={index} className="food">
-                    <Link to={`/orders/${order.id}`}>
-                      <h2>ORDER {order.id}</h2>
-                      <h3>{order.status}</h3>
-                      {order.orderItems.map((item, i) => (
-                        <div key={i}>
-                          <h4>{item.name}</h4>
-                        </div>
-                      ))}
-                    </Link>
+        <div>
+          <div className="row">
+            {orders.map((order, index) => (
+              
+                  <div className="foods">
+                    <div key={index} className="food">
+                      <Link to={`/orders/${order.id}`}>
+                        <h2>ORDER {order.id}</h2>
+                        <h3>{order.status}</h3>
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              );
-            } else if (order.status === "COOKED" || order.status === "SERVED") {
-              return (
-                <div className="foods">
-                  <div key={index} className="food">
-                  <Link to={`/orders/${order.id}`}>
-                    <h2>ORDER {order.id}</h2>
-                    <h3>{order.status}</h3></Link>
-                  </div>
-                </div>
-              );
-            }
-          })}
+              ))}
+          </div>
         </div>
       )}
       {orders && !isOrdered() && (

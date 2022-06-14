@@ -54,8 +54,9 @@ function SignupPage(props) {
         getAllUsers();
       })
       .catch((error) => {
-        const errorDescription = error.response.data.message;
+        const errorDescription = error.response.data.errors[0].defaultMessage
         setErrorMessage(errorDescription);
+        console.log(error.response)
       });
   };
 
@@ -121,7 +122,7 @@ function SignupPage(props) {
               </select>
             </div>
             <div className="form__field">
-              <button type="submit">Sign Up</button>
+              <button type="submit">Register</button>
             </div>
           </form>
 

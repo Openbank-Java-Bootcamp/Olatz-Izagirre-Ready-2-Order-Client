@@ -37,6 +37,23 @@ body {
   flex-direction: column;
   align-items: center;
 }
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  overflow-x: scroll;
+  max-width: 100%;
+}
+
+.row::-webkit-scrollbar {
+  height: 10px;
+  background-color: transparent;
+}
+.row::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 20px;
+  width: 50%;
+}
 
 .users table {
   margin-top: 50px;
@@ -203,7 +220,7 @@ h2 {
 .Navbar span {
   margin-left: 15px;
 }
-.food img{
+.food img {
   border: 1px solid #242c37;
 }
 .food {
@@ -215,7 +232,6 @@ h2 {
   border-radius: 20px;
   height: max-content;
   color: #242c37;
-  
 }
 .food h3 {
   color: #fb6860;
@@ -231,7 +247,6 @@ h2 {
   gap: 25px;
   margin-left: 50px;
   grid-template-columns: auto auto auto auto;
-  
 }
 .foods button {
   margin-bottom: 15px;
@@ -249,14 +264,14 @@ h2 {
   font-size: 15px;
 }
 
-.center_align .tables{
+.center_align .tables {
   display: grid;
   gap: 100px;
   margin-left: 175px;
-  margin-right:175px ;
+  margin-right: 175px;
   grid-template-columns: auto auto auto auto;
 }
-.center_align .table{
+.center_align .table {
   box-shadow: 0 0 15px #5e5e5e;
   text-align: center;
   padding: 2rem 2rem;
@@ -267,7 +282,7 @@ h2 {
   color: #242c37;
   text-decoration: none;
 }
-.center_align .table:hover{
+.center_align .table:hover {
   box-shadow: 0 0 15px #5e5e5e;
   text-align: center;
   padding: 2rem 2rem;
@@ -302,11 +317,13 @@ h2 {
   color: #242c37;
   text-decoration: none;
 }
-.table h3,.editTable h3 {
+.table h3,
+.editTable h3 {
   color: #fb6860;
   text-transform: uppercase;
 }
-.editTable h2, .table h2 {
+.editTable h2,
+.table h2 {
   font-size: 20px;
 
   text-transform: uppercase;
@@ -346,20 +363,19 @@ h2 {
   text-decoration: none;
 }
 
-.order .foods{
+.order .foods {
   display: grid;
   gap: 25px;
   margin-right: 50px;
   grid-template-columns: auto auto auto;
 }
-.order_grid{
+.order_grid {
   display: grid;
   gap: 25px;
   margin-right: 25px;
   grid-template-columns: auto auto;
 }
-.fixed{
-  position: fixed;
+.fixed {
   margin-top: 125px;
   background-color: white;
   align-items: flex-start;
@@ -382,7 +398,9 @@ h2 {
   color: #fff;
   font-size: 15px;
 }
-
+.row .food {
+  margin-bottom: 20px;
+}
 .fixed td {
   width: 400px;
   font-size: 20px;
@@ -392,4 +410,17 @@ h2 {
 .fixed th {
   padding-top: 25px;
   width: 400px;
+}
+
+.newGrid{
+  margin-right: 50px;
+}
+
+.newGrid .foods{
+  display: grid;
+  grid-template-columns:auto auto;
+}
+.centered{
+  width: 50%;
+  text-align: center;
 }

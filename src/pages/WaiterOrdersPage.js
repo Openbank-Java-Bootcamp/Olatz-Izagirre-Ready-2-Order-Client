@@ -57,31 +57,46 @@ function WaiterOrdersPage() {
 
   return (
     <div>
-      <h1>Current orders</h1>
-      <h2>Cooked</h2>
-      {cooked &&
-        cooked.map((order) => (
-          <div key={order.id}>
-            <h3>Table : {order.eatingTable.id}</h3>
-            {order.orderItems.map((item, index) => (
-              <div key={index}>{item.name} {item.price} €</div>
-            ))}
-            <h3>Total : {order.total} €</h3>
-            <button onClick={() => changeStatus(order.id)}>SERVED</button>
-          </div>
-        ))}
-      <h2>Served</h2>
-      {served &&
-        served.map((order) => (
-          <div key={order.id}>
-            <h3>Table : {order.eatingTable.id}</h3>
-            {order.orderItems.map((item, index) => (
-              <div key={index}>{item.name} {item.price} €</div>
-            ))}
-            <h3>Total : {order.total} €</h3>
-            <button onClick={() => changeStatus(order.id)}>PAID</button>
-          </div>
-        ))}
+      <h2>Current orders</h2>
+      <div className="row">
+      <div className="centered">
+        <h2>Cooked</h2>
+        <div className="newGrid">
+        <div className="foods">
+        {cooked &&
+          cooked.map((order) => (
+            <div key={order.id} className="food">
+              <h2>Table : {order.eatingTable.id}</h2>
+              {order.orderItems.map((item, index) => (
+                <div key={index}>
+                  {item.name} {item.price} €
+                </div>
+              ))}
+              <h3>Total : {order.total} €</h3>
+              <button onClick={() => changeStatus(order.id)}>SERVED</button>
+            </div>
+          ))}</div></div>
+      </div>
+      <div className="centered" >
+        
+        <h2>Served</h2>
+        <div className="newGrid">
+        <div className="foods">
+        {served &&
+          served.map((order) => (
+            <div key={order.id} className="food">
+              <h2>Table : {order.eatingTable.id}</h2>
+              {order.orderItems.map((item, index) => (
+                <div key={index}>
+                  {item.name} {item.price} €
+                </div>
+              ))}
+              <h3>Total : {order.total} €</h3>
+              <button onClick={() => changeStatus(order.id)}>PAID</button>
+            </div>
+          ))}</div></div>
+      </div>
+      </div>
     </div>
   );
 }

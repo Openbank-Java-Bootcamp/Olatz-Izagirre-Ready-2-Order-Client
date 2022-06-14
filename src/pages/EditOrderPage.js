@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const API_URL = "http://localhost:5005";
 
@@ -9,8 +9,11 @@ function EditOrderPage() {
   const [itemsId, setItemsId] = useState([]);
   const [order, setOrder] = useState([]);
   const [tableId, setTableId] = useState(null);
+  const [status, setStatus] = useState(null);
 
   const { orderId } = useParams();
+
+  const navigate = useNavigate();
 
   const selectItem = (item) => {
     const newIds = [...itemsId, item.id];
@@ -48,6 +51,7 @@ function EditOrderPage() {
         setOrder([]);
         setItemsId([]);
         getOrder();
+        navigate(`/tables/${tableId}/order`);
       })
       .catch((error) => console.log(error));
   };
@@ -61,6 +65,7 @@ function EditOrderPage() {
       .then((response) => {
         setOrder(response.data.orderItems);
         setTableId(response.data.eatingTable.id);
+        setStatus(response.data.status);
         const newOrderItems = response.data.orderItems;
         let newItems = [];
         for (let i = 0; newOrderItems.length > i; i++) {
@@ -76,10 +81,11 @@ function EditOrderPage() {
     getOrder();
   }, []);
 
+  console.log(status);
   return (
-    <div className="left_align">
-      {order && (
-        <div>
+    <div >
+      {status === "ORDERED" && (
+        <div className="left_align">
           <div className="order_grid">
             <div className="order">
               <h2>Menu</h2>
@@ -101,7 +107,7 @@ function EditOrderPage() {
             </div>
             <div>
               <table className="fixed">
-              <tr>
+                <tr>
                   <th>
                     <h2>EDIT ORDER</h2>
                   </th>
@@ -113,14 +119,46 @@ function EditOrderPage() {
                   order.map((orderItem, index) => (
                     <tr key={index}>
                       <td>{orderItem.name}</td>
-                      <td><button onClick={() => deselectItem(index)}>
-                        DELETE
-                      </button></td>
+                      <td>
+                        <button onClick={() => deselectItem(index)}>
+                          DELETE
+                        </button>
+                      </td>
                     </tr>
                   ))}
               </table>
             </div>
           </div>
+        </div>
+      )}
+      {status === "COOKED" && (
+        <div>
+          <div className="center_align">
+                  <div className="food">
+                      <h2>ORDER {orderId}</h2>
+                      <h3>{status}</h3>
+                      {order.map((item, i) => (
+                        <div key={i}>
+                          <h4>{item.name}</h4>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+        </div>
+      )}
+      {status === "SERVED" && (
+        <div>
+          <div className="center_align">
+                  <div className="food">
+                      <h2>ORDER {orderId}</h2>
+                      <h3>{status}</h3>
+                      {order.map((item, i) => (
+                        <div key={i}>
+                          <h4>{item.name}</h4>
+                        </div>
+                      ))}
+                  </div>
+                </div>
         </div>
       )}
     </div>

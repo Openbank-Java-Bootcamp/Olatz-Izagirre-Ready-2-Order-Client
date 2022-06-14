@@ -76,7 +76,7 @@ function OrderItemsPage() {
           <p>{orderItem.description}</p>
           <h4>{orderItem.price} €</h4>
           <button onClick={() => toggleVisibility(orderItem.id)}>
-            {orderItem.visible ? <span>HIDE</span> : <span>SHOW</span>}
+            {orderItem.visible ? "HIDE" : "SHOW"}
           </button>
         </div>
       ))}</div>

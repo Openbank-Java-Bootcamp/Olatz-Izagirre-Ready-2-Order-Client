@@ -13,7 +13,7 @@ function Navbar() {
       <div>
       {isLoggedIn&&
       <Link to="/resume">
-        <button>Resume</button>
+        <button>Home</button>
       </Link>}
 
       {role === "ADMIN" && (

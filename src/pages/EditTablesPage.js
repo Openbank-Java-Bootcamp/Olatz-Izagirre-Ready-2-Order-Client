@@ -42,13 +42,9 @@ function EditTablesPage(props) {
 
   const handleEdit = (e) => {
     e.preventDefault();
-    // Create an object representing the request body
     const requestBody = { seats, waiter };
 
     const storedToken = localStorage.getItem("authToken");
-    // Make an axios request to the API
-    // If POST request is successful redirect to login page
-    // If the request resolves with an error, set the error message in the state
     axios
       .put(`${API_URL}/api/eatingTables/${tableId}`, requestBody, {
         headers: { Authorization: `Bearer ${storedToken}` },

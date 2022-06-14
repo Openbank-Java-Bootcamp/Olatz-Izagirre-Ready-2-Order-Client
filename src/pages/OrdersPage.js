@@ -23,16 +23,17 @@ function OrdersPage() {
 
   return (
     <div>
-      <h1>Orders</h1>
+      <h2>Orders</h2>
+      <div className="foods">
       {orders &&
         orders.map((order) => (
-          <div key={order.id}>
+          <div key={order.id} className="food">
             <h2>Table : {order.eatingTable.id}</h2>
-            <h3>Status : {order.status}</h3>
+            <h3>{order.status}</h3>
             <h4>Bill : {order.total} €</h4>
           </div>
         ))}
-    </div>
+    </div></div>
   );
 }
 export default OrdersPage;
