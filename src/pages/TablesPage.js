@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 
 const API_URL = "http://localhost:5005";
 
-function TablesPage(props) {
+function TablesPage() {
   const [seats, setSeats] = useState("");
   const [waiter, setWaiter] = useState("");
   const [waiters, setWaiters] = useState([]);
   const [tables, setTables] = useState([]);
+  const [errorMessage, setErrorMessage] = useState(undefined);
 
   const getAllWaiters = () => {
     const stored = localStorage.getItem("authToken");
@@ -38,18 +39,19 @@ function TablesPage(props) {
     getAllTables();
   }, []);
 
-  const handleSeats = (e) => setSeats(e.target.value);
-  const handleWaiter = (e) => setWaiter(e.target.value);
+  const handleSeats = (e) => {
+    setSeats(e.target.value);
+    setErrorMessage("");
+  };
+  const handleWaiter = (e) => {
+    setWaiter(e.target.value);
+    setErrorMessage("");
+  };
 
   const handleCreate = (e) => {
     e.preventDefault();
-    // Create an object representing the request body
     const requestBody = { seats, waiter };
-
     const storedToken = localStorage.getItem("authToken");
-    // Make an axios request to the API
-    // If POST request is successful redirect to login page
-    // If the request resolves with an error, set the error message in the state
     axios
       .post(`${API_URL}/api/eatingTables`, requestBody, {
         headers: { Authorization: `Bearer ${storedToken}` },
@@ -59,7 +61,15 @@ function TablesPage(props) {
         setWaiter(waiters[0]);
         getAllTables();
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        if (error.response.data.errors) {
+          const errorDescription = error.response.data.errors[0].defaultMessage;
+          setErrorMessage(errorDescription);
+        } else {
+          const errorDescription = error.response.data.message;
+          setErrorMessage(errorDescription);
+        }
+      });
   };
 
   return (
@@ -77,7 +87,6 @@ function TablesPage(props) {
       <div className="grid align__item">
         <div className="register">
           <h2>New Table</h2>
-
           <form onSubmit={handleCreate} className="form">
             <label>Seats:</label>
             <div className="form__field">
@@ -88,7 +97,6 @@ function TablesPage(props) {
                 onChange={handleSeats}
               />
             </div>
-
             <label>Waiter:</label>
             <div className="form__field">
               <select name="waiter" value={waiter} onChange={handleWaiter}>
@@ -103,6 +111,7 @@ function TablesPage(props) {
             <div className="form__field">
               <button type="submit">Create</button>
             </div>
+            {errorMessage && <p>{errorMessage}</p>}
           </form>
         </div>
       </div>

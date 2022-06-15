@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-
 const API_URL = "http://localhost:5005";
 
 function ChefOrdersPage() {
@@ -37,22 +36,27 @@ function ChefOrdersPage() {
 
   console.log(orders);
   return (
-    <div>
-      <h1>ORDERS TO PREPARE</h1>
-      {orders &&
-        orders.map((order) => (
-          <div key={order.id}>
-            <h1>Table : {order.eatingTable.id}</h1>
-            <form>
-            {order.orderItems.map((item, index) => (
-              <div key={index}>
-              <input type="checkbox" />{item.name}
+    <div className="center_align">
+      <h2>ORDERS TO PREPARE</h2>
+      <div className="align">
+        <div className="foods">
+          {orders &&
+            orders.map((order) => (
+              <div key={order.id} className="food">
+                <h3>Table : {order.eatingTable.id}</h3>
+                <form>
+                  {order.orderItems.map((item, index) => (
+                    <div key={index}>
+                      <h4><input type="checkbox" />
+                      {item.name}</h4>
+                    </div>
+                  ))}
+                </form>
+                <button onClick={() => changeStatus(order.id)}>DONE</button>
               </div>
             ))}
-            </form>
-            <button onClick={() => changeStatus(order.id)}>DONE</button>
-          </div>
-        ))}
+        </div>
+      </div>
     </div>
   );
 }

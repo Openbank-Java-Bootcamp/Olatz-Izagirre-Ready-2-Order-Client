@@ -32,11 +32,8 @@ function LoginPage(props) {
       .post(`${API_URL}/auth/login`, requestBody)
       .then((response) => {
         console.log("JWT token", response.data.authToken);
-
         storeToken(response.data.authToken);
-
         authenticateUser();
-
         navigate("/resume");
       })
       .catch((error) => {
@@ -49,7 +46,6 @@ function LoginPage(props) {
       <div className="grid align__item">
         <div className="register">
           <h2>Log in</h2>
-
           <form onSubmit={handleLoginSubmit} className="form">
             <label>Email:</label>
             <div className="form__field">
@@ -60,7 +56,6 @@ function LoginPage(props) {
                 onChange={handleEmail}
               />
             </div>
-
             <label>Password:</label>
             <div className="form__field">
               <input

@@ -4,11 +4,12 @@ import { useParams } from "react-router-dom";
 
 const API_URL = "http://localhost:5005";
 
-function EditTablesPage(props) {
+function EditTablesPage() {
   const [seats, setSeats] = useState("");
   const [waiter, setWaiter] = useState("");
   const [waiters, setWaiters] = useState([]);
   const [table, setTable] = useState("");
+  const [errorMessage, setErrorMessage] = useState(undefined);
 
   const { tableId } = useParams();
 
@@ -37,8 +38,14 @@ function EditTablesPage(props) {
     getAllWaiters();
   }, []);
 
-  const handleSeats = (e) => setSeats(e.target.value);
-  const handleWaiter = (e) => setWaiter(e.target.value);
+  const handleSeats = (e) => {
+    setSeats(e.target.value);
+    setErrorMessage("");
+  };
+  const handleWaiter = (e) => {
+    setWaiter(e.target.value);
+    setErrorMessage("");
+  };
 
   const handleEdit = (e) => {
     e.preventDefault();
@@ -52,7 +59,15 @@ function EditTablesPage(props) {
       .then((response) => {
         getTable();
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        if (error.response.data.errors) {
+          const errorDescription = error.response.data.errors[0].defaultMessage;
+          setErrorMessage(errorDescription);
+        } else {
+          const errorDescription = error.response.data.message;
+          setErrorMessage(errorDescription);
+        }
+      });
   };
 
   return (
@@ -68,7 +83,6 @@ function EditTablesPage(props) {
       <div className="grid align__item">
         <div className="register">
           <h2>Edit Table</h2>
-
           {table && (
             <form onSubmit={handleEdit} className="form">
               <label>Seats:</label>
@@ -80,7 +94,6 @@ function EditTablesPage(props) {
                   onChange={handleSeats}
                 />
               </div>
-
               <label>Waiter:</label>
               <div className="form__field">
                 <select
@@ -99,6 +112,7 @@ function EditTablesPage(props) {
               <div className="form__field">
                 <button type="submit">Edit</button>
               </div>
+              {errorMessage && <p>{errorMessage}</p>}
             </form>
           )}
         </div>

@@ -11,6 +11,7 @@ function OrderItemsPage() {
   const [price, setPrice] = useState("");
   const [orderItems, setOrderItems] = useState([]);
   const [chef, setChef] = useState("");
+  const [errorMessage, setErrorMessage] = useState(undefined);
 
   const { user } = useContext(AuthContext);
 
@@ -29,18 +30,27 @@ function OrderItemsPage() {
     setChef(user.name);
   }, []);
 
-  const handleName = (e) => setName(e.target.value);
-  const handleDescription = (e) => setDescription(e.target.value);
-  const handleImage = (e) => setImage(e.target.value);
-  const handlePrice = (e) => setPrice(e.target.value);
+  const handleName = (e) => {
+    setName(e.target.value);
+    setErrorMessage("");
+  };
+  const handleDescription = (e) => {
+    setDescription(e.target.value);
+    setErrorMessage("");
+  };
+  const handleImage = (e) => {
+    setImage(e.target.value);
+    setErrorMessage("");
+  };
+  const handlePrice = (e) => {
+    setPrice(e.target.value);
+    setErrorMessage("");
+  };
 
   const handleCreate = (e) => {
     e.preventDefault();
-
     const requestBody = { name, description, image, price, chef };
-
     const storedToken = localStorage.getItem("authToken");
-
     axios
       .post(`${API_URL}/api/orderItems`, requestBody, {
         headers: { Authorization: `Bearer ${storedToken}` },
@@ -52,7 +62,15 @@ function OrderItemsPage() {
         setPrice("");
         getAllOrderItems();
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        if (error.response.data.errors) {
+          const errorDescription = error.response.data.errors[0].defaultMessage;
+          setErrorMessage(errorDescription);
+        } else {
+          const errorDescription = error.response.data.message;
+          setErrorMessage(errorDescription);
+        }
+      });
   };
 
   const toggleVisibility = (id) => {
@@ -69,17 +87,18 @@ function OrderItemsPage() {
   return (
     <div className="left_align">
       <div className="foods">
-      {orderItems.map((orderItem) => (
-        <div key={orderItem.id}className="food">
-          <img src={orderItem.image} alt={orderItem.name} height="100px" />
-          <h3>{orderItem.name}</h3>
-          <p>{orderItem.description}</p>
-          <h4>{orderItem.price} €</h4>
-          <button onClick={() => toggleVisibility(orderItem.id)}>
-            {orderItem.visible ? "HIDE" : "SHOW"}
-          </button>
-        </div>
-      ))}</div>
+        {orderItems.map((orderItem) => (
+          <div key={orderItem.id} className="food">
+            <img src={orderItem.image} alt={orderItem.name} height="100px" />
+            <h3>{orderItem.name}</h3>
+            <p>{orderItem.description}</p>
+            <h4>{orderItem.price} €</h4>
+            <button onClick={() => toggleVisibility(orderItem.id)}>
+              {orderItem.visible ? "HIDE" : "SHOW"}
+            </button>
+          </div>
+        ))}
+      </div>
       <div className="grid align__item">
         <div className="register">
           <h2>New food</h2>
@@ -93,7 +112,6 @@ function OrderItemsPage() {
                 onChange={handleName}
               />
             </div>
-
             <label>Description:</label>
             <div className="form__field">
               <textarea
@@ -103,7 +121,6 @@ function OrderItemsPage() {
                 onChange={handleDescription}
               />
             </div>
-
             <label>Image:</label>
             <div className="form__field">
               <input
@@ -113,7 +130,6 @@ function OrderItemsPage() {
                 onChange={handleImage}
               />
             </div>
-
             <label>Price:</label>
             <div className="form__field">
               <input
@@ -126,6 +142,7 @@ function OrderItemsPage() {
             <div className="form__field">
               <button type="submit">Create</button>
             </div>
+            {errorMessage && <p>{errorMessage}</p>}
           </form>
         </div>
       </div>

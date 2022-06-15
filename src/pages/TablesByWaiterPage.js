@@ -12,7 +12,6 @@ function TablesByWaiterPage() {
 
   const getTables = () => {
     const storedToken = localStorage.getItem("authToken");
-
     axios
       .get(`${API_URL}/api/waiters/eatingTables`, {
         headers: { Authorization: `Bearer ${storedToken}` },
@@ -29,18 +28,23 @@ function TablesByWaiterPage() {
   }, []);
 
   return (
-    <div className="center_align"><h2>TABLES</h2>
-    <div className="align">
-      <div className="tables">
-        
-        {tables &&
-          tables.map((table) => (
-            <Link to={`/tables/${table.id}/order`} key={table.id} className="table">
-              <h2>{`Table number : ${table.id}`}</h2>
-            </Link>
-          ))}
+    <div className="center_align">
+      <h2>TABLES</h2>
+      <div className="align">
+        <div className="tables">
+          {tables &&
+            tables.map((table) => (
+              <Link
+                to={`/tables/${table.id}/order`}
+                key={table.id}
+                className="table"
+              >
+                <h2>{`Table number : ${table.id}`}</h2>
+              </Link>
+            ))}
+        </div>
       </div>
-    </div></div>
+    </div>
   );
 }
 export default TablesByWaiterPage;

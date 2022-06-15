@@ -8,7 +8,6 @@ function OrdersPage() {
 
   const getOrders = () => {
     const storedToken = localStorage.getItem("authToken");
-
     axios
       .get(`${API_URL}/api/foodOrders`, {
         headers: { Authorization: `Bearer ${storedToken}` },
@@ -22,18 +21,35 @@ function OrdersPage() {
   }, []);
 
   return (
-    <div>
-      <h2>Orders</h2>
-      <div className="foods">
-      {orders &&
-        orders.map((order) => (
-          <div key={order.id} className="food">
-            <h2>Table : {order.eatingTable.id}</h2>
-            <h3>{order.status}</h3>
-            <h4>Bill : {order.total} €</h4>
-          </div>
-        ))}
-    </div></div>
+    <div className="right_align">
+      <div className="users">
+        <table>
+          <tr>
+            <th>
+              <h2>Order</h2>
+            </th>
+            <th>
+              <h2>Table</h2>
+            </th>
+            <th>
+              <h2>Status</h2>
+            </th>
+            <th>
+              <h2>Bill</h2>
+            </th>
+          </tr>
+          {orders &&
+            orders.map((order) => (
+              <tr key={order.id}>
+                <td> {order.id}</td>
+                <td> {order.eatingTable.id}</td>
+                <td>{order.status}</td>
+                <td>{order.total} €</td>
+              </tr>
+            ))}
+        </table>
+      </div>
+    </div>
   );
 }
 export default OrdersPage;

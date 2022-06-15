@@ -21,53 +21,108 @@ import WaiterOrdersPage from "./pages/WaiterOrdersPage";
 import OrdersPage from "./pages/OrdersPage";
 import EditOrderPage from "./pages/EditOrderPage";
 
-
 function App() {
   return (
     <div className="App">
       <Navbar />
 
       <Routes>
-        <Route path="/" element={<IsAnon><HomePage /></IsAnon>} />
+        <Route
+          path="/"
+          element={
+            <IsAnon>
+              <HomePage />
+            </IsAnon>
+          }
+        />
         <Route
           path="/signup"
           element={
-             <IsAdmin>
+            <IsAdmin>
               <SignupPage />
-             </IsAdmin>
+            </IsAdmin>
           }
         />
         <Route
           path="/tables"
           element={
-             <IsAdmin>
+            <IsAdmin>
               <TablesPage />
-             </IsAdmin>
+            </IsAdmin>
           }
         />
         <Route
           path="/tables/:tableId"
           element={
-             <IsAdmin>
+            <IsAdmin>
               <EditTablesPage />
-             </IsAdmin>
+            </IsAdmin>
           }
         />
         <Route
           path="/orders"
           element={
-             <IsAdmin>
+            <IsAdmin>
               <OrdersPage />
-             </IsAdmin>
+            </IsAdmin>
           }
         />
-        <Route path ="/resume" element={<IsPrivate><ResumePage/></IsPrivate>}/>
-        <Route path ="/orderItems"element={<IsChef><OrderItemsPage/></IsChef>}/>
-        <Route path ="/chef/orders"element={<IsChef><ChefOrdersPage/></IsChef>}/>
-        <Route path = "/tables/waiter" element ={<IsWaiter><TablesByWaiterPage/></IsWaiter>}/>
-        <Route path = "/tables/:tableId/order" element ={<IsWaiter><NewOrderPage/></IsWaiter>}/>
-        <Route path = "/waiter/orders" element ={<IsWaiter><WaiterOrdersPage/></IsWaiter>}/>
-         <Route path = "/orders/:orderId" element ={<IsWaiter><EditOrderPage/></IsWaiter>}/> 
+        <Route
+          path="/resume"
+          element={
+            <IsPrivate>
+              <ResumePage />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/orderItems"
+          element={
+            <IsChef>
+              <OrderItemsPage />
+            </IsChef>
+          }
+        />
+        <Route
+          path="/chef/orders"
+          element={
+            <IsChef>
+              <ChefOrdersPage />
+            </IsChef>
+          }
+        />
+        <Route
+          path="/tables/waiter"
+          element={
+            <IsWaiter>
+              <TablesByWaiterPage />
+            </IsWaiter>
+          }
+        />
+        <Route
+          path="/tables/:tableId/order"
+          element={
+            <IsWaiter>
+              <NewOrderPage />
+            </IsWaiter>
+          }
+        />
+        <Route
+          path="/waiter/orders"
+          element={
+            <IsWaiter>
+              <WaiterOrdersPage />
+            </IsWaiter>
+          }
+        />
+        <Route
+          path="/orders/:orderId"
+          element={
+            <IsWaiter>
+              <EditOrderPage />
+            </IsWaiter>
+          }
+        />
         <Route
           path="/login"
           element={

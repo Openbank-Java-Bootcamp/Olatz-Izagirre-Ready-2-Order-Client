@@ -43,17 +43,28 @@ function EditOrderPage() {
     const requestBody = { orderId, tableId, itemsId };
     console.log(requestBody);
     const storedToken = localStorage.getItem("authToken");
-    axios
-      .put(`${API_URL}/api/foodOrders/${orderId}`, requestBody, {
-        headers: { Authorization: `Bearer ${storedToken}` },
-      })
-      .then(() => {
-        setOrder([]);
-        setItemsId([]);
-        getOrder();
-        navigate(`/tables/${tableId}/order`);
-      })
-      .catch((error) => console.log(error));
+    if (itemsId.length > 0) {
+      axios
+        .put(`${API_URL}/api/foodOrders/${orderId}`, requestBody, {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        })
+        .then(() => {
+          setOrder([]);
+          setItemsId([]);
+          getOrder();
+          navigate(`/tables/${tableId}/order`);
+        })
+        .catch((error) => console.log(error));
+    } else {
+      axios
+        .delete(`${API_URL}/api/foodOrders/${orderId}`, {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        })
+        .then(() => {
+          navigate(`/tables/${tableId}/order`);
+        })
+        .catch((error) => console.log(error));
+    }
   };
 
   const getOrder = () => {
@@ -76,14 +87,31 @@ function EditOrderPage() {
       .catch((error) => console.log(error));
   };
 
+  const showDetails = () =>{
+    return(
+      <div>
+          <div className="center_align">
+            <div className="food">
+              <h2>ORDER {orderId}</h2>
+              <h3>{status}</h3>
+              {order.map((item, i) => (
+                <div key={i}>
+                  <h4>{item.name}</h4>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+    )
+  }
+
   useEffect(() => {
     getVisibleItems();
     getOrder();
   }, []);
 
-  console.log(status);
   return (
-    <div >
+    <div>
       {status === "ORDERED" && (
         <div className="left_align">
           <div className="order_grid">
@@ -131,36 +159,8 @@ function EditOrderPage() {
           </div>
         </div>
       )}
-      {status === "COOKED" && (
-        <div>
-          <div className="center_align">
-                  <div className="food">
-                      <h2>ORDER {orderId}</h2>
-                      <h3>{status}</h3>
-                      {order.map((item, i) => (
-                        <div key={i}>
-                          <h4>{item.name}</h4>
-                        </div>
-                      ))}
-                  </div>
-                </div>
-        </div>
-      )}
-      {status === "SERVED" && (
-        <div>
-          <div className="center_align">
-                  <div className="food">
-                      <h2>ORDER {orderId}</h2>
-                      <h3>{status}</h3>
-                      {order.map((item, i) => (
-                        <div key={i}>
-                          <h4>{item.name}</h4>
-                        </div>
-                      ))}
-                  </div>
-                </div>
-        </div>
-      )}
+      {status === "COOKED" && showDetails()}
+      {status === "SERVED" && showDetails()}
     </div>
   );
 }

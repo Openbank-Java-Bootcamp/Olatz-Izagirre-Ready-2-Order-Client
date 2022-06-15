@@ -100,17 +100,20 @@ function NewOrderPage() {
       {orders && isOngoing() && (
         <div>
           <div className="row">
-            {orders.map((order, index) => (
-              
-                  <div className="foods">
-                    <div key={index} className="food">
+            {orders.map((order, index) => {
+              if (order.status !== "PAID") {
+                return (
+                  <div key={index} className="foods">
+                    <div  className="food">
                       <Link to={`/orders/${order.id}`}>
                         <h2>ORDER {order.id}</h2>
                         <h3>{order.status}</h3>
                       </Link>
                     </div>
                   </div>
-              ))}
+                );
+              }
+            })}
           </div>
         </div>
       )}

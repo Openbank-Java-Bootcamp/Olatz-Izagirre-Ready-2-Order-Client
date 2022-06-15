@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const API_URL = "http://localhost:5005";
 
-function SignupPage(props) {
+function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -26,22 +25,26 @@ function SignupPage(props) {
     getAllUsers();
   }, []);
 
-  const navigate = useNavigate();
-
-  const handleEmail = (e) => setEmail(e.target.value);
-  const handlePassword = (e) => setPassword(e.target.value);
-  const handleName = (e) => setName(e.target.value);
-  const handleRole = (e) => setRole(e.target.value);
-
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+    setErrorMessage("");
+  };
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+    setErrorMessage("");
+  };
+  const handleName = (e) => {
+    setName(e.target.value);
+    setErrorMessage("");
+  };
+  const handleRole = (e) => {
+    setRole(e.target.value);
+    setErrorMessage("");
+  };
   const handleSignupSubmit = (e) => {
     e.preventDefault();
-    // Create an object representing the request body
     const requestBody = { email, password, name, role };
-
     const storedToken = localStorage.getItem("authToken");
-    // Make an axios request to the API
-    // If POST request is successful redirect to login page
-    // If the request resolves with an error, set the error message in the state
     axios
       .post(`${API_URL}/auth/signup`, requestBody, {
         headers: { Authorization: `Bearer ${storedToken}` },
@@ -54,9 +57,13 @@ function SignupPage(props) {
         getAllUsers();
       })
       .catch((error) => {
-        const errorDescription = error.response.data.errors[0].defaultMessage
-        setErrorMessage(errorDescription);
-        console.log(error.response)
+        if (error.response.data.errors) {
+          const errorDescription = error.response.data.errors[0].defaultMessage;
+          setErrorMessage(errorDescription);
+        } else {
+          const errorDescription = error.response.data.message;
+          setErrorMessage(errorDescription);
+        }
       });
   };
 
@@ -65,8 +72,12 @@ function SignupPage(props) {
       <div className="users">
         <table>
           <tr>
-            <th><h2>Employee name</h2></th>
-            <th><h2>Role</h2></th>
+            <th>
+              <h2>Employee name</h2>
+            </th>
+            <th>
+              <h2>Role</h2>
+            </th>
           </tr>
           {users &&
             users.map((user) => (
@@ -77,11 +88,9 @@ function SignupPage(props) {
             ))}
         </table>
       </div>
-
       <div className="grid align__item">
         <div className="register">
           <h2>New employees</h2>
-
           <form onSubmit={handleSignupSubmit} className="form">
             <label>Email:</label>
             <div className="form__field">
@@ -92,7 +101,6 @@ function SignupPage(props) {
                 onChange={handleEmail}
               />
             </div>
-
             <label>Password:</label>
             <div className="form__field">
               <input
@@ -102,7 +110,6 @@ function SignupPage(props) {
                 onChange={handlePassword}
               />
             </div>
-
             <label>Name:</label>
             <div className="form__field">
               <input
@@ -112,7 +119,6 @@ function SignupPage(props) {
                 onChange={handleName}
               />
             </div>
-
             <label>Role:</label>
             <div className="form__field">
               <select name="role" value={role} onChange={handleRole}>
@@ -125,7 +131,6 @@ function SignupPage(props) {
               <button type="submit">Register</button>
             </div>
           </form>
-
           {errorMessage && <p>{errorMessage}</p>}
         </div>
       </div>
