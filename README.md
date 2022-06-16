@@ -38,4 +38,6 @@ In the future the project could be improved by adding some filtering functionali
 
 Link to my trello board: https://trello.com/b/MNwKmZfn/final-project
 
+Presentation slides: https://docs.google.com/presentation/d/1f_WBci4Y4_1l_n5YL7tu6_HevMNlDNcMf0zi4EBuMmM/edit?usp=sharing
+
 *A project by Olatz Izagirre.*
