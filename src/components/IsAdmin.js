@@ -5,15 +5,11 @@ import { Navigate } from "react-router-dom";
 function IsAdmin({ children }) {
   const { isLoggedIn, isLoading, role } = useContext(AuthContext);
 
-  // If the authentication is still loading
   if (isLoading) return <p>Loading ...</p>;
 
   if (!isLoggedIn || role !== "ADMIN") {
-    // If the user is logged in, navigate to home page
     return <Navigate to="/" />;
-  }
-    else {
-    // If the user is not logged in, allow to see the page
+  } else {
     return children;
   }
 }

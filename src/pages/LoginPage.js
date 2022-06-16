@@ -2,12 +2,12 @@
 
 import { useContext, useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 
 const API_URL = "http://localhost:5005";
 
-function LoginPage(props) {
+function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
@@ -16,6 +16,7 @@ function LoginPage(props) {
 
   const { storeToken, authenticateUser } = useContext(AuthContext);
 
+  //Handle each of the inputs of the form
   const handleEmail = (e) => {
     setEmail(e.target.value);
     setErrorMessage(undefined);
@@ -24,10 +25,11 @@ function LoginPage(props) {
     setPassword(e.target.value);
     setErrorMessage(undefined);
   };
+
+  //Handle the form's subsmission
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     const requestBody = { email, password };
-
     axios
       .post(`${API_URL}/auth/login`, requestBody)
       .then((response) => {
@@ -42,7 +44,15 @@ function LoginPage(props) {
   };
 
   return (
-    <div className="align">
+    <div className="left_align">
+      <button
+        className="back_button"
+        onClick={() => {
+          navigate(`/`);
+        }}
+      >
+        Back
+      </button>
       <div className="grid align__item">
         <div className="register">
           <h2>Log in</h2>

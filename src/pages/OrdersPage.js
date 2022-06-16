@@ -1,11 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function OrdersPage() {
   const [orders, setOrders] = useState([]);
 
   const API_URL = "http://localhost:5005";
+  const navigate = useNavigate();
 
+  //Get all the orders from the database
   const getOrders = () => {
     const storedToken = localStorage.getItem("authToken");
     axios
@@ -22,7 +25,16 @@ function OrdersPage() {
 
   return (
     <div className="right_align">
-      <div className="users">
+      <button
+        className="back_button"
+        onClick={() => {
+          navigate(`/resume`);
+        }}
+      >
+        Back
+      </button>
+      <div className="orders">
+        {/* Show all the orders organized in a table */}
         <table>
           <tr>
             <th>

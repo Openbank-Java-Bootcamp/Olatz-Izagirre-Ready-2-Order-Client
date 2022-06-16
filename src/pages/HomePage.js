@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-
 const API_URL = "http://localhost:5005";
 
 function HomePage() {
   const [orderItems, setOrderItems] = useState([]);
 
+  //Get the menu from the database
   const getVisibleItems = () => {
     axios
       .get(`${API_URL}/api/orderItems/visibles`)
@@ -22,16 +22,19 @@ function HomePage() {
   return (
     <div className="right_align">
       <h2>Menu</h2>
-      <div className="foods">
-      {orderItems.map((orderItem) => (
-        <div key={orderItem.id} className="food">
-          <img src={orderItem.image} alt={orderItem.name} height="100px" />
-          <h3>{orderItem.name}</h3>
-          <p>{orderItem.description}</p>
-          <h4>{orderItem.price} €</h4>
-        </div>
-      ))}
-    </div>
+      {/* Show the menu */}
+      <div className="foods_home">
+        {orderItems.map((orderItem) => (
+          <div key={orderItem.id} className="food">
+            <div className="circular">
+            <img src={orderItem.image} alt={orderItem.name} />
+            </div>
+            <h3>{orderItem.name}</h3>
+            <p>{orderItem.description}</p>
+            <h4>{orderItem.price} €</h4>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const API_URL = "http://localhost:5005";
 
@@ -11,6 +12,9 @@ function SignupPage() {
   const [role, setRole] = useState("CHEF");
   const [users, setUsers] = useState([]);
 
+  const navigate = useNavigate();
+
+  //Get all users from the database
   const getAllUsers = () => {
     const stored = localStorage.getItem("authToken");
     axios
@@ -25,6 +29,7 @@ function SignupPage() {
     getAllUsers();
   }, []);
 
+  //Handle each of the inputs of the form
   const handleEmail = (e) => {
     setEmail(e.target.value);
     setErrorMessage("");
@@ -41,6 +46,8 @@ function SignupPage() {
     setRole(e.target.value);
     setErrorMessage("");
   };
+
+  //Handle the form's subsmission
   const handleSignupSubmit = (e) => {
     e.preventDefault();
     const requestBody = { email, password, name, role };
@@ -69,7 +76,16 @@ function SignupPage() {
 
   return (
     <div className="left_align">
+      <button
+        className="back_button"
+        onClick={() => {
+          navigate(`/resume`);
+        }}
+      >
+        Back
+      </button>
       <div className="users">
+        {/* Show all the users organized in a table */}
         <table>
           <tr>
             <th>

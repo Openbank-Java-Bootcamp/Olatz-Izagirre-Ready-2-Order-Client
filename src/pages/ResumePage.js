@@ -6,6 +6,7 @@ function ResumePage() {
   const { role } = useContext(AuthContext);
   return (
     <div className="resume">
+      {/* Show different options depending on the role logged in */}
       {role === "ADMIN" && (
         <>
           <Link to="/signup">

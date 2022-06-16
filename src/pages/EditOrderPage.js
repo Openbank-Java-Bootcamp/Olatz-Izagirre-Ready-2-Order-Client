@@ -15,6 +15,7 @@ function EditOrderPage() {
 
   const navigate = useNavigate();
 
+  //Add an item to the order
   const selectItem = (item) => {
     const newIds = [...itemsId, item.id];
     setItemsId(newIds);
@@ -22,6 +23,7 @@ function EditOrderPage() {
     setOrder(newOrder);
   };
 
+  //Delete an item from the order
   const deselectItem = (index) => {
     const items = [...itemsId];
     items.splice(index, 1);
@@ -30,6 +32,7 @@ function EditOrderPage() {
     setOrder(order);
   };
 
+  //Get the menu from the database
   const getVisibleItems = () => {
     axios
       .get(`${API_URL}/api/orderItems/visibles`)
@@ -39,9 +42,9 @@ function EditOrderPage() {
       .catch((error) => console.log(error));
   };
 
+  //Update the order or delete it from the database
   const sendToKitchen = () => {
     const requestBody = { orderId, tableId, itemsId };
-    console.log(requestBody);
     const storedToken = localStorage.getItem("authToken");
     if (itemsId.length > 0) {
       axios
@@ -61,12 +64,13 @@ function EditOrderPage() {
           headers: { Authorization: `Bearer ${storedToken}` },
         })
         .then(() => {
-          navigate(`/tables/${tableId}/order`);
+          navigate(`/tables/waiter`);
         })
         .catch((error) => console.log(error));
     }
   };
 
+  //Get the selected order from the database
   const getOrder = () => {
     const token = localStorage.getItem("authToken");
     axios
@@ -87,23 +91,24 @@ function EditOrderPage() {
       .catch((error) => console.log(error));
   };
 
-  const showDetails = () =>{
-    return(
+  //Show an order's details
+  const showDetails = () => {
+    return (
       <div>
-          <div className="center_align">
-            <div className="food">
-              <h2>ORDER {orderId}</h2>
-              <h3>{status}</h3>
-              {order.map((item, i) => (
-                <div key={i}>
-                  <h4>{item.name}</h4>
-                </div>
-              ))}
-            </div>
+        <div className="center_align">
+          <div className="food">
+            <h2>ORDER {orderId}</h2>
+            <h3>{status}</h3>
+            {order.map((item, i) => (
+              <div key={i}>
+                <h4>{item.name}</h4>
+              </div>
+            ))}
           </div>
         </div>
-    )
-  }
+      </div>
+    );
+  };
 
   useEffect(() => {
     getVisibleItems();
@@ -112,6 +117,15 @@ function EditOrderPage() {
 
   return (
     <div>
+      <button
+        className="back"
+        onClick={() => {
+          navigate(`/tables/${tableId}/order`);
+        }}
+      >
+        Back
+      </button>
+      {/* If the status of the selected order equals ORDERED, show the menu and the order in order to edit the selected order */}
       {status === "ORDERED" && (
         <div className="left_align">
           <div className="order_grid">
@@ -120,11 +134,9 @@ function EditOrderPage() {
               <div className="foods">
                 {orderItems.map((orderItem) => (
                   <div key={orderItem.id} className="food">
-                    <img
-                      src={orderItem.image}
-                      alt={orderItem.name}
-                      height="100px"
-                    />
+                    <div className="circular">
+                      <img src={orderItem.image} alt={orderItem.name} />
+                    </div>
                     <h1>{orderItem.name}</h1>
                     <p>{orderItem.description}</p>
                     <h3>{orderItem.price} €</h3>
@@ -159,6 +171,7 @@ function EditOrderPage() {
           </div>
         </div>
       )}
+      {/* If the status of the selected order equals COOKED or SERVED, show the details of the selected order  */}
       {status === "COOKED" && showDetails()}
       {status === "SERVED" && showDetails()}
     </div>

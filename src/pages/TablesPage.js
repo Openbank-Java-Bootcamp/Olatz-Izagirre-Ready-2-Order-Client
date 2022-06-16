@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const API_URL = "http://localhost:5005";
 
@@ -11,6 +11,9 @@ function TablesPage() {
   const [tables, setTables] = useState([]);
   const [errorMessage, setErrorMessage] = useState(undefined);
 
+  const navigate = useNavigate();
+
+  //Get al the waiters form the database
   const getAllWaiters = () => {
     const stored = localStorage.getItem("authToken");
     axios
@@ -21,6 +24,7 @@ function TablesPage() {
       .catch((error) => console.log(error));
   };
 
+  //Get all the tables from the database
   const getAllTables = () => {
     const storedToken = localStorage.getItem("authToken");
     axios
@@ -31,14 +35,7 @@ function TablesPage() {
       .catch((error) => console.log(error));
   };
 
-  useEffect(() => {
-    getAllWaiters();
-  }, []);
-
-  useEffect(() => {
-    getAllTables();
-  }, []);
-
+  //Handle each of the inputs of the form
   const handleSeats = (e) => {
     setSeats(e.target.value);
     setErrorMessage("");
@@ -48,6 +45,7 @@ function TablesPage() {
     setErrorMessage("");
   };
 
+  //Handle the form's subsmission
   const handleCreate = (e) => {
     e.preventDefault();
     const requestBody = { seats, waiter };
@@ -72,9 +70,23 @@ function TablesPage() {
       });
   };
 
+  useEffect(() => {
+    getAllWaiters();
+    getAllTables();
+  }, []);
+
   return (
     <div className="left_align">
+      <button
+        className="back_button"
+        onClick={() => {
+          navigate(`/resume`);
+        }}
+      >
+        Back
+      </button>
       <div className="tables">
+        {/* Show all the tables */}
         {tables &&
           tables.map((table) => (
             <Link to={`/tables/${table.id}`} key={table.id} className="table">

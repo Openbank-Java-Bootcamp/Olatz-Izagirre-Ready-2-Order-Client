@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const API_URL = "http://localhost:5005";
 
@@ -11,6 +11,8 @@ function NewOrderPage() {
   const [orders, setOrders] = useState([]);
 
   const { tableId } = useParams();
+
+  const navigate = useNavigate();
 
   const selectItem = (item) => {
     const newIds = [...itemsId, item.id];
@@ -35,6 +37,7 @@ function NewOrderPage() {
     }
   };
 
+  //Get the menu from the database
   const getVisibleItems = () => {
     axios
       .get(`${API_URL}/api/orderItems/visibles`)
@@ -44,10 +47,10 @@ function NewOrderPage() {
       .catch((error) => console.log(error));
   };
 
+  //Save the new order in the database
   const sendToKitchen = () => {
     if (itemsId.length !== 0) {
       const requestBody = { tableId, itemsId };
-      console.log(requestBody);
       const storedToken = localStorage.getItem("authToken");
       axios
         .post(`${API_URL}/api/foodOrders`, requestBody, {
@@ -60,6 +63,7 @@ function NewOrderPage() {
     }
   };
 
+  //Get all the current table's orders from the database
   const getOrders = () => {
     const token = localStorage.getItem("authToken");
     axios
@@ -70,6 +74,7 @@ function NewOrderPage() {
       .catch((error) => console.log(error));
   };
 
+//Check if there's any on going order for the table
   const isOngoing = () => {
     let value = false;
     for (let i = 0; i < orders.length; i++) {
@@ -80,6 +85,7 @@ function NewOrderPage() {
     return value;
   };
 
+  //Check if there's any ordered order for the table
   const isOrdered = () => {
     let value = false;
     for (let i = 0; i < orders.length; i++) {
@@ -97,14 +103,23 @@ function NewOrderPage() {
 
   return (
     <div>
+      <button
+        className="back"
+        onClick={() => {
+          navigate(`/tables/waiter`);
+        }}
+      >
+        Back
+      </button>
       {orders && isOngoing() && (
         <div>
           <div className="row">
+            {/* Show all the unpaid orders as a summary */}
             {orders.map((order, index) => {
               if (order.status !== "PAID") {
                 return (
                   <div key={index} className="foods">
-                    <div  className="food">
+                    <div className="food">
                       <Link to={`/orders/${order.id}`}>
                         <h2>ORDER {order.id}</h2>
                         <h3>{order.status}</h3>
@@ -117,6 +132,7 @@ function NewOrderPage() {
           </div>
         </div>
       )}
+      {/* Show the menu and the option to create a new order if there isn't any ordered order yet */}
       {orders && !isOrdered() && (
         <div className="left_align">
           <div className="order_grid">
@@ -125,11 +141,9 @@ function NewOrderPage() {
               <div className="foods">
                 {orderItems.map((orderItem) => (
                   <div key={orderItem.id} className="food">
-                    <img
-                      src={orderItem.image}
-                      alt={orderItem.name}
-                      height="100px"
-                    />
+                    <div className="circular">
+                      <img src={orderItem.image} alt={orderItem.name} />
+                    </div>
                     <h1>{orderItem.name}</h1>
                     <p>{orderItem.description}</p>
                     <h3>{orderItem.price} €</h3>

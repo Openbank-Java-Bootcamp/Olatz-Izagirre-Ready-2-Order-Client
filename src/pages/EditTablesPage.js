@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const API_URL = "http://localhost:5005";
 
@@ -13,6 +13,9 @@ function EditTablesPage() {
 
   const { tableId } = useParams();
 
+  const navigate = useNavigate();
+
+  //Get all waiters from the database 
   const getAllWaiters = () => {
     const stored = localStorage.getItem("authToken");
     axios
@@ -23,6 +26,7 @@ function EditTablesPage() {
       .catch((error) => console.log(error));
   };
 
+  //Get the table we want to edit
   const getTable = () => {
     const storedToken = localStorage.getItem("authToken");
     axios
@@ -38,6 +42,7 @@ function EditTablesPage() {
     getAllWaiters();
   }, []);
 
+  //Handle each of the inputs of the form
   const handleSeats = (e) => {
     setSeats(e.target.value);
     setErrorMessage("");
@@ -47,6 +52,7 @@ function EditTablesPage() {
     setErrorMessage("");
   };
 
+  //Handle the form's subsmission
   const handleEdit = (e) => {
     e.preventDefault();
     const requestBody = { seats, waiter };
@@ -58,6 +64,7 @@ function EditTablesPage() {
       })
       .then((response) => {
         getTable();
+        navigate(`/tables`);
       })
       .catch((error) => {
         if (error.response.data.errors) {
@@ -72,7 +79,16 @@ function EditTablesPage() {
 
   return (
     <div className="left_align">
+      <button
+        className="back_button"
+        onClick={() => {
+          navigate(`/tables`);
+        }}
+      >
+        Back
+      </button>
       <div className="editTables"></div>
+      {/* Show the table we are about to edit */}
       {table && (
         <div className="editTable">
           <h2>{`Table number : ${table.id}`}</h2>

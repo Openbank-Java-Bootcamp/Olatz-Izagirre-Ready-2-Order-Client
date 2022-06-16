@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 
 const API_URL = "http://localhost:5005";
@@ -10,6 +10,9 @@ function TablesByWaiterPage() {
 
   const { user } = useContext(AuthContext);
 
+  const navigate = useNavigate();
+
+  //Get all the tables certain waiter is responsible for
   const getTables = () => {
     const storedToken = localStorage.getItem("authToken");
     axios
@@ -29,9 +32,18 @@ function TablesByWaiterPage() {
 
   return (
     <div className="center_align">
+      <button
+        className="back"
+        onClick={() => {
+          navigate(`/resume`);
+        }}
+      >
+        Back
+      </button>
       <h2>TABLES</h2>
       <div className="align">
         <div className="tables">
+          {/* Show all the tables */}
           {tables &&
             tables.map((table) => (
               <Link

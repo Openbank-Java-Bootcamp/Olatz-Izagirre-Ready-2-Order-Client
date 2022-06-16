@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 
 const API_URL = "http://localhost:5005";
@@ -15,6 +16,9 @@ function OrderItemsPage() {
 
   const { user } = useContext(AuthContext);
 
+  const navigate = useNavigate();
+
+//Get all the order iterms from the database
   const getAllOrderItems = () => {
     const stored = localStorage.getItem("authToken");
     axios
@@ -30,6 +34,7 @@ function OrderItemsPage() {
     setChef(user.name);
   }, []);
 
+  //Handle each of the inputs of the form
   const handleName = (e) => {
     setName(e.target.value);
     setErrorMessage("");
@@ -47,6 +52,7 @@ function OrderItemsPage() {
     setErrorMessage("");
   };
 
+  //Handle the form's subsmission
   const handleCreate = (e) => {
     e.preventDefault();
     const requestBody = { name, description, image, price, chef };
@@ -73,6 +79,7 @@ function OrderItemsPage() {
       });
   };
 
+  //Change an item's visibility
   const toggleVisibility = (id) => {
     const token = localStorage.getItem("authToken");
     const body = null;
@@ -86,10 +93,20 @@ function OrderItemsPage() {
 
   return (
     <div className="left_align">
+      <button
+        className="back_button"
+        onClick={() => {
+          navigate(`/resume`);
+        }}
+      >
+        Back
+      </button>
       <div className="foods">
+        {/* Show all the order items */}
         {orderItems.map((orderItem) => (
           <div key={orderItem.id} className="food">
-            <img src={orderItem.image} alt={orderItem.name} height="100px" />
+            <div className="circular">
+            <img src={orderItem.image} alt={orderItem.name} /></div>
             <h3>{orderItem.name}</h3>
             <p>{orderItem.description}</p>
             <h4>{orderItem.price} €</h4>

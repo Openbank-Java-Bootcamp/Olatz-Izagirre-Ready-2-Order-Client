@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 
 function WaiterOrdersPage() {
@@ -7,9 +8,11 @@ function WaiterOrdersPage() {
   const [served, setServed] = useState([]);
 
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const API_URL = "http://localhost:5005";
 
+  //Get all the cooked orders a waiter is responsible for from the database
   const getCooked = () => {
     const storedToken = localStorage.getItem("authToken");
     axios
@@ -21,6 +24,7 @@ function WaiterOrdersPage() {
       .catch((error) => console.log(error));
   };
 
+  //Get all the served orders a waiter is responsible for from the database
   const getServed = () => {
     const stored = localStorage.getItem("authToken");
     axios
@@ -32,6 +36,7 @@ function WaiterOrdersPage() {
       .catch((error) => console.log(error));
   };
 
+  //Change the status of an order from cooked to served or from served to paid in the database
   const changeStatus = (id) => {
     const token = localStorage.getItem("authToken");
     const body = null;
@@ -46,6 +51,7 @@ function WaiterOrdersPage() {
       .catch((error) => console.log(error));
   };
 
+  //Show each order detailed
   const showOrders = (orders) => {
     return (
       <div className="newGrid">
@@ -61,7 +67,9 @@ function WaiterOrdersPage() {
                   </div>
                 ))}
                 <h3>Total : {order.total} €</h3>
-                <button onClick={() => changeStatus(order.id)}>{order.status === "COOKED"? "SERVED":"PAID"}</button>
+                <button onClick={() => changeStatus(order.id)}>
+                  {order.status === "COOKED" ? "SERVED" : "PAID"}
+                </button>
               </div>
             ))}
         </div>
@@ -76,6 +84,14 @@ function WaiterOrdersPage() {
 
   return (
     <div>
+      <button
+        className="back"
+        onClick={() => {
+          navigate(`/resume`);
+        }}
+      >
+        Back
+      </button>
       <h2>Current orders</h2>
       <div className="row">
         <div className="centered">
