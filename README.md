@@ -36,4 +36,6 @@ The project has been developed using React (JavaScript + HTML + CSS).
 
 In the future the project could be improved by adding some filtering functionalities, filtering orders by status or filtering order items by type (main, dessert, drink...).
 
+Link to my trello board: https://trello.com/b/MNwKmZfn/final-project
+
 *A project by Olatz Izagirre.*
