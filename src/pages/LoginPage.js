@@ -51,7 +51,7 @@ function LoginPage() {
           navigate(`/`);
         }}
       >
-        Back
+        {"<"}
       </button>
       <div className="grid align__item">
         <div className="register">

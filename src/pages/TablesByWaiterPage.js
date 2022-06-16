@@ -38,7 +38,7 @@ function TablesByWaiterPage() {
           navigate(`/resume`);
         }}
       >
-        Back
+        {"<"}
       </button>
       <h2>TABLES</h2>
       <div className="align">

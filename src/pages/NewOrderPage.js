@@ -109,7 +109,7 @@ function NewOrderPage() {
           navigate(`/tables/waiter`);
         }}
       >
-        Back
+        {"<"}
       </button>
       {orders && isOngoing() && (
         <div>

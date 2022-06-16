@@ -123,7 +123,7 @@ function EditOrderPage() {
           navigate(`/tables/${tableId}/order`);
         }}
       >
-        Back
+        {"<"}
       </button>
       {/* If the status of the selected order equals ORDERED, show the menu and the order in order to edit the selected order */}
       {status === "ORDERED" && (

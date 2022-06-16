@@ -90,16 +90,16 @@ function WaiterOrdersPage() {
           navigate(`/resume`);
         }}
       >
-        Back
+        {"<"}
       </button>
       <h2>Current orders</h2>
       <div className="row">
         <div className="centered">
-          <h2>Cooked</h2>
+          <h2 className="surrounded">Cooked</h2>
           {showOrders(cooked)}
         </div>
         <div className="centered">
-          <h2>Served</h2>
+          <h2 className="surrounded">Served</h2>
           {showOrders(served)}
         </div>
       </div>

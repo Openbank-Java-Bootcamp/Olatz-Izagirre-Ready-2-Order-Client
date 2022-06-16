@@ -99,7 +99,7 @@ function OrderItemsPage() {
           navigate(`/resume`);
         }}
       >
-        Back
+        {"<"}
       </button>
       <div className="foods">
         {/* Show all the order items */}

@@ -82,7 +82,7 @@ function SignupPage() {
           navigate(`/resume`);
         }}
       >
-        Back
+        {"<"}
       </button>
       <div className="users">
         {/* Show all the users organized in a table */}

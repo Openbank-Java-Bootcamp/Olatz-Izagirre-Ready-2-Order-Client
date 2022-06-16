@@ -218,15 +218,18 @@ h2 {
   padding-right: 50px;
   padding-top: 20px;
   padding-bottom: 20px;
+  
 }
 .Navbar button {
   align-items: center;
   border-radius: 20px;
-  border: 0px solid #242c37;
+  border: 1px solid white;
   background-color: transparent;
-  color: #2b2b2b;
+  color: white;
   height: 50px;
   text-transform: uppercase;
+  margin:5px;
+  font-size: 15px;
 }
 .Navbar button:hover {
   align-items: center;
@@ -240,8 +243,14 @@ h2 {
 
 .Navbar span {
   margin-left: 15px;
+  color: white;
 }
 
+.Navbar img{
+  object-fit: none;
+  height: 75px;
+  width:350px
+}
 .food {
   box-shadow: 0 0 15px #5e5e5e;
   text-align: center;
@@ -249,9 +258,9 @@ h2 {
   margin-top: 50px;
   background-color: white;
   border-radius: 20px;
-  height: max-content;
   color: #242c37;
   max-width: 300px;
+  height: max-content;
 }
 .food h3 {
   color: #fb6860;
@@ -455,34 +464,36 @@ h2 {
 }
 
 .back_button{
-  margin-left: 720px;
+  margin-left: 185px;
   margin-top: 5px;
   border: 1px solid #242c37;
   border-radius: 999px;
   background-color: transparent;
   text-align: center;
   outline: 0;
-  padding: 0.5rem 0.5rem;
-  width: 100px;
+  padding: 0.3rem 0.5rem;
+  width: 75px;
   background-color: #242c37;
   color: white;
-  font-size: 15px;
+  font-size: 25px;
+  font-weight: 700;
   position: fixed;
 }
 
 .back{
-  margin-left: 0px;
+  margin-left: -1090px;
   margin-top: 5px;
   border: 1px solid #242c37;
   border-radius: 999px;
   background-color: transparent;
   text-align: center;
   outline: 0;
-  padding: 0.5rem 0.5rem;
-  width: 100px;
+  padding: 0.3rem 0.5rem;
+  width: 75px;
   background-color: #242c37;
   color: white;
-  font-size: 15px;
+  font-size: 25px;
+  font-weight: 700;
 }
 
 .circular {
@@ -498,4 +509,16 @@ h2 {
   width: auto;
   height: 100%;
   margin-left: -50px;
+}
+
+.surrounded{
+  border: 1.5px solid #242c37;
+  border-radius: 20px;
+  text-align: center;
+  width: 500px;
+  margin-left: 110px
+}
+
+.chef_orders{
+  text-align: left;
 }

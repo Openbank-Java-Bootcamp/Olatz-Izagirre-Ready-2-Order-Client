@@ -85,7 +85,7 @@ function EditTablesPage() {
           navigate(`/tables`);
         }}
       >
-        Back
+        {"<"}
       </button>
       <div className="editTables"></div>
       {/* Show the table we are about to edit */}

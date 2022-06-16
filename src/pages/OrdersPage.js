@@ -31,7 +31,7 @@ function OrdersPage() {
           navigate(`/resume`);
         }}
       >
-        Back
+        {"<"}
       </button>
       <div className="orders">
         {/* Show all the orders organized in a table */}

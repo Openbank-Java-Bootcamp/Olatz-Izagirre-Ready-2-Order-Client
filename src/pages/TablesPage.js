@@ -83,7 +83,7 @@ function TablesPage() {
           navigate(`/resume`);
         }}
       >
-        Back
+        {"<"}
       </button>
       <div className="tables">
         {/* Show all the tables */}

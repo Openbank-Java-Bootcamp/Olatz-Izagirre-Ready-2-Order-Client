@@ -39,7 +39,7 @@ function ChefOrdersPage() {
   return (
     <div className="center_align">
       <button className="back" onClick={() => navigate(`/resume`)}>
-        Back
+      {"<"}
       </button>
       <h2>ORDERS TO PREPARE</h2>
       <div className="align">
@@ -49,7 +49,7 @@ function ChefOrdersPage() {
             orders.map((order) => (
               <div key={order.id} className="food">
                 <h3>Table : {order.eatingTable.id}</h3>
-                <form>
+                <form className="chef_orders">
                   {order.orderItems.map((item, index) => (
                     <div key={index}>
                       <h4>

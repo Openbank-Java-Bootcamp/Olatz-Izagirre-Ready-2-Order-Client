@@ -1,13 +1,14 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
+import logo from "../whitelogo.png";
 
 function Navbar() {
   const { isLoggedIn, user, logOutUser, role } = useContext(AuthContext);
 
   return (
     <nav className="Navbar">
-      <h2>READY2ORDER</h2>
+      <img src={logo} alt="White logo"/> 
       <div>
         {isLoggedIn && (
           <Link to="/resume">
