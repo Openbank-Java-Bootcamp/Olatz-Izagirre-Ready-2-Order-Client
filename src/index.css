@@ -271,6 +271,28 @@ h2 {
   font-weight: 400;
   text-transform: uppercase;
 }
+.food_homepage {
+  box-shadow: 0 0 15px #5e5e5e;
+  text-align: center;
+  padding: 4rem 2rem;
+  margin-top: 50px;
+  background-color: white;
+  border-radius: 20px;
+  color: #242c37;
+  width: 300px;
+  max-width: 300px;
+  max-height: max-content;
+}
+.food_homepage h3 {
+  color: #fb6860;
+  text-transform: uppercase;
+}
+.food_homepage h4 {
+  color: #5e5e5e;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
 .foods {
   display: grid;
   gap: 25px;

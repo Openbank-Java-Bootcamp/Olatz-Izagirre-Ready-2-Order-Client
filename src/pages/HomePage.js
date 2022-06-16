@@ -25,7 +25,7 @@ function HomePage() {
       {/* Show the menu */}
       <div className="foods_home">
         {orderItems.map((orderItem) => (
-          <div key={orderItem.id} className="food">
+          <div key={orderItem.id} className="food_homepage">
             <div className="circular">
             <img src={orderItem.image} alt={orderItem.name} />
             </div>
